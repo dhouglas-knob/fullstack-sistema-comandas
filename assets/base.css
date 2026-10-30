@@ -1,0 +1,193 @@
+/* ==========================================================
+   base.css
+   Variáveis de cor e fonte, reset e estilo geral da página.
+   Só existe o tema claro.
+   ========================================================== */
+
+
+/* ---------- 1. Fontes (arquivos em assets/fonts/) ---------- */
+
+@font-face {
+  font-family: 'Lora';
+  src: url('../fonts/lora-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Space Mono';
+  src: url('../fonts/space-mono-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('../fonts/dm-sans-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('../fonts/dm-sans-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* ---------- 2. Variáveis ---------- */
+
+:root {
+  /* Cores */
+  --fundo: #F4F4F2;
+  --fundo-selecionado: #E8E8E5;
+  --linha: #D8D8D4;
+  --papel: #FFFFFF;
+  --texto: #1F2933;
+  --texto-suave: #5B6670;
+  --destaque: #1F5A3E;
+  --sobre-destaque: #FFFFFF;
+  --sucesso: #2F855A;
+  --ambar: #F0B429;
+  --ambar-borda: #8A5200;
+  --ambar-texto: #6A4103;
+  --erro: #C23B1F;
+
+  /* Fontes (as reservas entram se o arquivo não carregar) */
+  --fonte-titulo: 'Lora', Georgia, serif;
+  --fonte-talao: 'Space Mono', ui-monospace, Menlo, Consolas, monospace;
+  --fonte-texto: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Cantos */
+  --raio-talao: 2px;
+  --raio-botao: 3px;
+  --raio-painel: 4px;
+
+  /* Espaçamentos */
+  --esp-1: 4px;
+  --esp-2: 8px;
+  --esp-3: 12px;
+  --esp-4: 16px;
+  --esp-5: 24px;
+  --esp-6: 32px;
+
+  /* Altura mínima de botões e campos (toque confortável) */
+  --altura-controle: 44px;
+}
+
+
+/* ---------- 3. Reset básico ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body,
+h1,
+h2,
+h3,
+p,
+figure {
+  margin: 0;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Formulários herdam a fonte da página (por padrão o navegador usa outra) */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Quem tem o atributo hidden fica realmente escondido */
+[hidden] {
+  display: none !important;
+}
+
+
+/* ---------- 4. Página ---------- */
+
+body {
+  min-height: 100vh;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: var(--fonte-texto);
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+
+/* ---------- 5. Títulos e texto ---------- */
+
+h1,
+h2,
+h3 {
+  font-family: var(--fonte-titulo);
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+h1 { font-size: 1.5rem; }
+h2 { font-size: 1.25rem; }
+h3 { font-size: 1.125rem; }
+
+a {
+  color: var(--destaque);
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.texto-suave {
+  color: var(--texto-suave);
+}
+
+/* Valores e horários no estilo do talão */
+.talao {
+  font-family: var(--fonte-talao);
+}
+
+
+/* ---------- 6. Foco visível (para quem usa teclado) ---------- */
+
+:focus-visible {
+  outline: 2px solid var(--destaque);
+  outline-offset: 2px;
+}
+
+
+/* ---------- 7. Utilitário ---------- */
+
+/* Esconde da tela, mas mantém para leitores de tela */
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
