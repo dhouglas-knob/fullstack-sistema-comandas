@@ -1,0 +1,30 @@
+/* ==========================================================
+   paginas.css
+   Ajustes que só uma ou duas telas precisam.
+   Por enquanto: o cartão centralizado do login e do cadastro.
+   ========================================================== */
+
+
+/* ---------- Login e cadastro ----------
+   <body class="pagina-central">
+     <main class="cartao-central"> ... </main>
+*/
+
+.pagina-central {
+  display: grid;
+  place-items: center;
+  padding: var(--esp-5);
+}
+
+.cartao-central {
+  width: 100%;
+  max-width: 380px;
+  background: var(--papel);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-painel);
+  padding: var(--esp-6) var(--esp-5);
+}
+
+.cartao-central h1 {
+  margin-bottom: var(--esp-1);
+}

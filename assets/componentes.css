@@ -1,0 +1,163 @@
+/* ==========================================================
+   componentes.css
+   Peças reutilizáveis: botão, campo de formulário, mensagem
+   e painel. Usa só as variáveis definidas no base.css.
+   Para mudar o visual de uma peça em todas as telas,
+   altere aqui.
+   ========================================================== */
+
+
+/* ---------- Botão ----------
+   Uso: <button class="botao">Entrar</button>
+   Variações (somam à classe .botao):
+     botao--contorno  só a borda, para ações secundárias
+     botao--perigo    para ações que apagam
+     botao--bloco     ocupa a largura toda
+*/
+
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-2);
+  min-height: var(--altura-controle);
+  padding: 0 var(--esp-5);
+  border: 1px solid var(--destaque);
+  border-radius: var(--raio-botao);
+  background: var(--destaque);
+  color: var(--sobre-destaque);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.botao:hover {
+  filter: brightness(0.92);
+}
+
+.botao:active {
+  transform: translateY(1px);
+}
+
+.botao:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.botao--contorno {
+  background: transparent;
+  border-color: var(--texto);
+  color: var(--texto);
+}
+
+.botao--contorno:hover {
+  background: var(--fundo-selecionado);
+  filter: none;
+}
+
+.botao--perigo {
+  background: var(--erro);
+  border-color: var(--erro);
+  color: #FFFFFF;
+}
+
+.botao--bloco {
+  width: 100%;
+}
+
+
+/* ---------- Campo de formulário ----------
+   Uso:
+   <div class="campo">
+     <label for="email">E-mail</label>
+     <input type="email" id="email" name="email">
+   </div>
+   Funciona também com <select> e <textarea>.
+   Extras:
+     campo__ajuda  texto de ajuda embaixo do campo
+     campo--erro   marca o campo com problema (borda e texto em vermelho)
+*/
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
+  margin-bottom: var(--esp-4);
+}
+
+.campo label {
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  width: 100%;
+  min-height: var(--altura-controle);
+  padding: var(--esp-2) var(--esp-3);
+  border: 1px solid var(--texto-suave);
+  border-radius: var(--raio-botao);
+  background: var(--papel);
+}
+
+.campo textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.campo__ajuda {
+  font-size: 0.875rem;
+  color: var(--texto-suave);
+}
+
+.campo--erro input,
+.campo--erro select,
+.campo--erro textarea {
+  border-color: var(--erro);
+}
+
+.campo--erro .campo__ajuda {
+  color: var(--erro);
+}
+
+
+/* ---------- Mensagem ----------
+   Uso: <p id="mensagem" class="mensagem" role="alert"></p>
+   O JavaScript escreve o texto e soma uma das variações:
+     mensagem--erro, mensagem--sucesso ou mensagem--aviso
+   A altura mínima evita que a tela "pule" quando o texto aparece.
+*/
+
+.mensagem {
+  min-height: 1.5em;
+  margin-bottom: var(--esp-4);
+  font-weight: 500;
+}
+
+.mensagem--erro {
+  color: var(--erro);
+}
+
+.mensagem--sucesso {
+  color: var(--sucesso);
+}
+
+.mensagem--aviso {
+  color: var(--ambar-texto);
+}
+
+
+/* ---------- Painel ----------
+   Uso: <section class="painel"> ... </section>
+   Caixa branca com borda fina, para agrupar conteúdo.
+*/
+
+.painel {
+  background: var(--papel);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-painel);
+  padding: var(--esp-5);
+}
