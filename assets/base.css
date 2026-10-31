@@ -1,7 +1,4 @@
-/* Variáveis de cor e fonte, reset e estilo geral da página. */
-
-
-/* ---------- 1. Fontes (arquivos em assets/fonts/) ---------- */
+/* Então neguin se liga aqui vou pegar as fontes */
 
 @font-face {
   font-family: 'Lora';
@@ -36,7 +33,7 @@
 }
 
 
-/* ---------- 2. Variáveis ---------- */
+/* Dhouglas aqui são meio que declaração de variáveis */
 
 :root {
   /* Cores */
@@ -46,7 +43,7 @@
   --papel: #FFFFFF;
   --texto: #1F2933;
   --texto-suave: #5B6670;
-  --destaque: #1F5A3E;
+  --destaque: #123524;
   --sobre-destaque: #FFFFFF;
   --sucesso: #2F855A;
   --ambar: #F0B429;
