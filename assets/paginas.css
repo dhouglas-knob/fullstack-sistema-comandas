@@ -4,7 +4,6 @@
    Por enquanto: o cartão centralizado do login e do cadastro.
    ========================================================== */
 
-
 /* ---------- Login e cadastro ----------
    <body class="pagina-central">
      <main class="cartao-central"> ... </main>
@@ -12,19 +11,40 @@
 
 .pagina-central {
   display: grid;
-  place-items: center;
-  padding: var(--esp-5);
+  grid-template-columns: min(400px, 100%);
+  justify-content: end;
+  align-items: center;
+  padding: 0;
+  padding-right: 5%;
 }
 
 .cartao-central {
   width: 100%;
-  max-width: 380px;
+  max-width: 400px;
+  height: 50%;
   background: var(--papel);
-  border: 1px solid var(--linha);
+  border: 2px solid var(--destaque);
   border-radius: var(--raio-painel);
-  padding: var(--esp-6) var(--esp-5);
+  padding-bottom: var(--esp-5);
+  box-shadow: 0 0 20px var(--destaque);
+  margin-right: 5%;
 }
 
 .cartao-central h1 {
   margin-bottom: var(--esp-1);
+  color: var(--papel);
+}
+
+#login-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: var(--esp-4);
+  padding: var(--esp-3);
+  background-color: var(--destaque);
+}
+
+#botao-entrar {
+  width: 30%;
+  margin-left: 5%;
 }

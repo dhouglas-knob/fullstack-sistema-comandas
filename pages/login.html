@@ -15,9 +15,15 @@
                 <h1>Login</h1>
             </div>
             <form action="" method="post">
-                <input type="email" name="email" id="input_email" placeholder="Email" required>
-                <input type="password" name="pass" id="pass" placeholder="Senha" required> <br>
-                <button type="submit" id="botao_entrar" name="botao_entrar">Entrar</button>
+                <div class="campo">
+                    <label for="input_email">Email</label>
+                    <input type="email" class="campo__input" name="email" id="input_email" placeholder="Email" required>
+                </div>
+                <div class="campo">
+                    <label for="pass">Senha</label>
+                    <input type="password" class="campo__input" name="pass" id="pass" placeholder="Senha" required>
+                </div>
+                <button type="submit" class="botao" name="botao_entrar" id="botao-entrar">Entrar</button>
             </form>
         </div>
     </main>

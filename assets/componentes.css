@@ -34,7 +34,8 @@
 }
 
 .botao:hover {
-  filter: brightness(0.92);
+  background: var(--sucesso);
+  border-color: var(--sucesso);
 }
 
 .botao:active {
@@ -88,6 +89,7 @@
 }
 
 .campo label {
+margin-left: 5%;
   font-size: 0.9375rem;
   font-weight: 500;
 }
@@ -95,12 +97,13 @@
 .campo input,
 .campo select,
 .campo textarea {
-  width: 100%;
+  width: 90%;
   min-height: var(--altura-controle);
   padding: var(--esp-2) var(--esp-3);
   border: 1px solid var(--texto-suave);
   border-radius: var(--raio-botao);
   background: var(--papel);
+  margin-left: 5%;
 }
 
 .campo textarea {
