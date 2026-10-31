@@ -42,10 +42,11 @@
   right: 0;
   display: flex;
   align-items: center;
-  padding: var(--esp-4) var(--esp-5);
+  /* Padding vertical maior = header mais alto, dando mais destaque ao nome */
+  padding: var(--esp-5) var(--esp-6);
   /* Verde do --destaque (#1F5A3E = rgb(31, 90, 62)) com opacidade de 70%.
      Para a foto aparecer mais, diminua o 0.7; para ficar mais sólido, aumente. */
-  background: rgba(31, 90, 62, 0.7);
+  background: rgba(0, 0, 0, 0.7);
   border-bottom: 2px solid var(--destaque);
 }
 
@@ -55,10 +56,59 @@
   margin-left: auto;
 }
 
+/* Visual do botão: contorno branco e fundo transparente (combina com o header escuro).
+   No hover ele se preenche de branco com o texto na cor do destaque. */
+#button-retorno button {
+  min-height: 48px;
+  padding: 0 var(--esp-6);
+  border: 2px solid var(--papel);
+  border-radius: var(--raio-botao);
+  background: transparent;
+  color: var(--papel);
+  font-size: 1.125rem;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+}
+
+#button-retorno button:hover {
+  background: var(--papel);
+  color: var(--destaque);
+}
+
 .header-nome {
   font-family: var(--fonte-titulo);
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: var(--papel);
+}
+
+/* Mensagem de boas-vindas na área vazia à esquerda do cartão.
+   Fica "fixed" pelo mesmo motivo do header: não entrar no grid do body.
+   A largura máxima desconta o cartão (400px) e as margens, para nunca ficar por baixo dele. */
+.boas-vindas {
+  position: fixed;
+  top: 50%;
+  left: 5%;
+  transform: translateY(-50%);
+  max-width: calc(100% - 400px - 15%);
+  color: var(--papel);
+  /* Sombra no texto ajuda a leitura sobre a foto */
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.boas-vindas-titulo {
+  font-size: 3.5rem;
+  margin-bottom: var(--esp-4);
+}
+
+.boas-vindas-texto {
+  font-size: 1.5rem;
+}
+
+/* Em telas estreitas não sobra espaço ao lado do cartão: esconde a mensagem */
+@media (max-width: 900px) {
+  .boas-vindas {
+    display: none;
+  }
 }
 
 .cartao-central {
