@@ -16,18 +16,63 @@
   align-items: center;
   padding: 0;
   padding-right: 5%;
+
+  /* Imagem de fundo: salve em assets/img/fundo-login.jpg (caminho relativo a este CSS).
+     O primeiro item da lista é o overlay: um gradiente preto semitransparente
+     por cima da foto. Para clarear/escurecer, mude os 0.55 (0 = sem escurecer, 1 = preto).
+     Se a imagem não existir, só o overlay aparece sobre a cor --fundo. */
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+    url('img/fundo-login.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* fixed: a imagem não se mexe se a página rolar em telas pequenas */
+  background-attachment: fixed;
+  background-color: var(--fundo);
+}
+
+/* Cabeçalho com o nome do restaurante.
+   Fica "fixed" (preso no topo, ocupando a largura toda) para não virar
+   um item do grid do body, o que bagunçaria a posição do cartão. */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  padding: var(--esp-4) var(--esp-5);
+  /* Verde do --destaque (#1F5A3E = rgb(31, 90, 62)) com opacidade de 70%.
+     Para a foto aparecer mais, diminua o 0.7; para ficar mais sólido, aumente. */
+  background: rgba(31, 90, 62, 0.7);
+  border-bottom: 2px solid var(--destaque);
+}
+
+/* Botão "Página Inicial" na direita do header: margin-left: auto empurra
+   ele até o canto direito, deixando o nome na esquerda */
+#button-retorno {
+  margin-left: auto;
+}
+
+.header-nome {
+  font-family: var(--fonte-titulo);
+  font-size: 1.5rem;
+  color: var(--papel);
 }
 
 .cartao-central {
   width: 100%;
   max-width: 400px;
-  height: 50%;
+  /* Altura do cartão: metade da área do grid (como era antes).
+     Mude o 50% para deixar mais alto ou mais baixo. */
   background: var(--papel);
   border: 2px solid var(--destaque);
   border-radius: var(--raio-painel);
   padding-bottom: var(--esp-5);
   box-shadow: 0 0 20px var(--destaque);
-  margin-right: 5%;
+  /* Removido "margin-right: 5%": o body já tem padding-right: 5%,
+     então o cartão ficava afastado da borda duas vezes. */
 }
 
 .cartao-central h1 {
@@ -45,6 +90,8 @@
 }
 
 #botao-entrar {
-  width: 30%;
+  width: 90%;
   margin-left: 5%;
+  padding: var(--esp-4);
+  font-size: var(--esp-5);
 }

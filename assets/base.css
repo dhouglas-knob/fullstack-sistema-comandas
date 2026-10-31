@@ -1,15 +1,11 @@
-/* ==========================================================
-   base.css
-   Variáveis de cor e fonte, reset e estilo geral da página.
-   Só existe o tema claro.
-   ========================================================== */
+/* Variáveis de cor e fonte, reset e estilo geral da página. */
 
 
 /* ---------- 1. Fontes (arquivos em assets/fonts/) ---------- */
 
 @font-face {
   font-family: 'Lora';
-  src: url('../fonts/lora-500.woff2') format('woff2');
+  src: url('fonts/lora-500.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -17,7 +13,7 @@
 
 @font-face {
   font-family: 'Space Mono';
-  src: url('../fonts/space-mono-400.woff2') format('woff2');
+  src: url('fonts/space-mono-400.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -25,7 +21,7 @@
 
 @font-face {
   font-family: 'DM Sans';
-  src: url('../fonts/dm-sans-400.woff2') format('woff2');
+  src: url('fonts/dm-sans-400.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -33,7 +29,7 @@
 
 @font-face {
   font-family: 'DM Sans';
-  src: url('../fonts/dm-sans-500.woff2') format('woff2');
+  src: url('fonts/dm-sans-500.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
