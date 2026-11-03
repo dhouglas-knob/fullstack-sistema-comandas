@@ -69,6 +69,8 @@ elseif ($metodo == "PUT")
 
     $stmt->execute();
 
+    http_response_code(200);
+
     echo json_encode([
         "mensagem" => "Usuário atualizado com sucesso!"
     ]);
@@ -80,13 +82,16 @@ elseif ($metodo == "DELETE")
 
     $id = $dados['id'];
 
-    $sql = "DELETE FROM user WHERE id = ?";
+    $sql = "DELETE FROM user 
+            WHERE id = ?";
 
     $stmt = $conn->prepare($sql);
 
     $stmt->bind_param("i", $id);
 
     $stmt->execute();
+
+    http_response_code(200);
 
     echo json_encode([
         "mensagem" => "Usuário excluído com sucesso!"              
