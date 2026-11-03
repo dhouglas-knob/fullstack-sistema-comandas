@@ -98,4 +98,13 @@ elseif ($metodo == "DELETE")
     ]);
 }
 
+else 
+{
+    http_response_code(405);
+
+    echo json_encode([
+        "erro" => "Método não permitido."
+    ]);
+}
+
 ?>
