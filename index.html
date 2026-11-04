@@ -1,10 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>index</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="../assets/base.css">
+    <link rel="stylesheet" href="../assets/componentes.css">
+    <link rel="stylesheet" href="../assets/paginas.css">
 </head>
-<body>
-<a href="pages/login.html"><button>Login</button></a>
+<body class="pagina-central">
+<header class="header">
+    <span class="header-nome">Nome do Restaurante</span>
+    <a id="button-retorno" href="../index.html">
+        <button>Página Inicial</button>
+    </a>
+</header>
+<section class="boas-vindas">
+    <h2 class="boas-vindas-titulo">Bem-vindo de volta!</h2>
+    <p class="boas-vindas-texto">Entre com seu email e senha para acessar o sistema de comandas.</p>
+</section>
+<main class="cartao-central">
+    <div id="login">
+        <div id="login-header">
+            <h1>Login</h1>
+        </div>
+        <form id="form-login" action="" method="">
+            <div class="campo">
+                <label for="input_email">Email</label>
+                <input type="email" class="campo" name="email" id="input_email" placeholder="Email" required>
+            </div>
+            <div class="campo">
+                <label for="pass">Senha</label>
+                <input type="password" class="campo" name="pass" id="pass" placeholder="Senha" required>
+            </div>
+            <button type="submit" class="botao" name="botao_entrar" id="botao-entrar">Entrar</button>
+        </form>
+    </div>
+</main>
 </body>
 </html>

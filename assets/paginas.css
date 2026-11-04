@@ -145,3 +145,23 @@
   padding: var(--esp-4);
   font-size: var(--esp-5);
 }
+
+/*
+Botão de sair de users
+*/
+
+#botao-sair {
+  margin-left: 10px;
+}
+
+#titulo-formulario{
+  margin-bottom: 10px;
+}
+
+.conteudo__topo {
+  margin: 20px;
+}
+
+.lista {
+  margin-left: 20px;
+}

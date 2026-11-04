@@ -7,8 +7,7 @@
    ========================================================== */
 
 
-/* ---------- Botão ----------
-   Uso: <button class="botao">Entrar</button>
+/* Botão 
    Variações (somam à classe .botao):
      botao--contorno  só a borda, para ações secundárias
      botao--perigo    para ações que apagam
@@ -69,14 +68,8 @@
 }
 
 
-/* ---------- Campo de formulário ----------
-   Uso:
-   <div class="campo">
-     <label for="email">E-mail</label>
-     <input type="email" id="email" name="email">
-   </div>
-   Funciona também com <select> e <textarea>.
-   Extras:
+/* Campo de formulário 
+
      campo__ajuda  texto de ajuda embaixo do campo
      campo--erro   marca o campo com problema (borda e texto em vermelho)
 */
@@ -153,9 +146,10 @@ margin-left: 5%;
 }
 
 
-/* ---------- Painel ----------
-   Uso: <section class="painel"> ... </section>
-   Caixa branca com borda fina, para agrupar conteúdo.
+/* Painel
+
+é uma caixona para guardar as coisas
+
 */
 
 .painel {
@@ -163,4 +157,36 @@ margin-left: 5%;
   border: 1px solid var(--linha);
   border-radius: var(--raio-painel);
   padding: var(--esp-5);
+  max-width: 55%;
+  margin: 0 auto;   /* 0 em cima e embaixo, auto nas laterais */
+}
+
+/* Barra Superior
+
+
+*/
+
+.barra-topo {
+  display: flex;
+  align-items: center;
+  padding: var(--esp-5) var(--esp-6);
+  background: var(--fundo-selecionado);
+  border-bottom: 2px solid var(--destaque);
+}
+
+.barra-topo__nome {
+  font-family: var(--fonte-titulo);
+  font-size: 2rem;
+  color: var(--destaque);
+}
+
+.barra-topo__menu {
+  margin-left: auto;          /* continua: empurra o menu para a direita */
+  display: flex;              /* novo: links lado a lado */
+  gap: 10px;          /* novo: espaço igual entre os links (substitui o margin-left: 5px) */
+}
+
+.barra-topo__link {
+  display: inline-flex;       /* novo: o <a> envolve o botão e o espaço em branco some */
+  text-decoration: none;      /* novo: tira o sublinhado */
 }

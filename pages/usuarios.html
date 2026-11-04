@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuários · Alfetti</title>
+    <link rel="stylesheet" href="../assets/base.css">
+    <link rel="stylesheet" href="../assets/componentes.css">
+    <link rel="stylesheet" href="../assets/paginas.css">
+</head>
+
+<body class="pagina-interna">
+
+    <!-- ========== Barra do topo (igual em todas as páginas internas) ========== -->
+    <header class="barra-topo">
+        <a class="barra-topo__nome" href="mesas.html">Alfetti</a>
+
+        <nav class="barra-topo__menu" aria-label="Menu principal">
+            <a class="barra-topo__link" href="mesas.html">
+                <button type="button" id="botao-mesas" class="botao">Mesas</button>
+            </a>
+            <a class="barra-topo__link" href="historico.html">
+                <button type="button" id="botao-historico" class="botao">Histórico</button>
+            </a>
+            <a class="barra-topo__link" href="produtos.html" data-perfil="gerente" hidden>
+                <button type="button" id="botao-produtos" class="botao">Produtos</button>
+            </a>
+            <a class="barra-topo__link" href="usuarios.html" data-perfil="gerente" aria-current="page" hidden>
+                <button type="button" id="botao-usuarios" class="botao">Usuários</button>
+            </a>
+        </nav>
+
+        <div class="barra-topo__usuario">
+            <!-- O JS escreve "Nome · cargo" aqui -->
+            <span id="usuario-logado"></span>
+            <button type="button" id="botao-sair" class="botao">Sair</button>
+        </div>
+    </header>
+
+    <main class="conteudo">
+
+        <!-- ========== Título e ação principal ========== -->
+        <div class="conteudo__topo">
+            <h1 id="titulo-formulario">Usuários</h1>
+            <!-- É navegação (vai para outra página), por isso <a> com cara de botão -->
+            <a class="botao" href="cadastro.html">Novo funcionário</a>
+        </div>
+
+        <!-- ========== Mensagens (erro e sucesso sempre aqui) ========== -->
+        <p id="mensagem" class="mensagem" role="status" aria-live="polite"></p>
+
+        <!-- ========== Lista de usuários ========== -->
+        <section class="lista" aria-labelledby="titulo-lista">
+            <h2 id="titulo-lista">Funcionários</h2>
+
+            <table class="tabela">
+                <caption class="visualmente-oculto">Funcionários cadastrados no sistema</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">Cargo</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <!-- O JS preenche com os dados da API (sem dados simulados) -->
+                <tbody id="lista-usuarios"></tbody>
+            </table>
+
+            <p id="lista-vazia" class="texto-suave" hidden>Nenhum funcionário cadastrado.</p>
+        </section>
+
+        <!-- ========== Modelo de linha: o JS clona para cada usuário ========== -->
+        <template id="modelo-linha-usuario">
+            <tr>
+                <td data-campo="nome"></td>
+                <td data-campo="email"></td>
+                <td data-campo="perfil"></td>
+                <td class="tabela__acoes">
+                    <!-- Editar vai para outra página: o JS completa o href com cadastro.html?id=... -->
+                    <a class="botao botao--contorno" data-acao="editar" href="cadastro.html">Editar</a>
+                    <!-- Excluir é ação na própria página: continua <button> -->
+                    <button type="button" class="botao botao--perigo" data-acao="excluir">Excluir</button>
+                </td>
+            </tr>
+        </template>
+
+    </main>
+
+    <!-- ========== Scripts (ainda não existem; ordem: api, ui, auth, página) ========== -->
+    <script src="../assets/js/api.js" defer></script>
+    <script src="../assets/js/ui.js" defer></script>
+    <script src="../assets/js/auth.js" defer></script>
+    <script src="../assets/js/usuarios.js" defer></script>
+</body>
+
+</html>
