@@ -8,33 +8,33 @@
     <link rel="stylesheet" href="../assets/base.css">
     <link rel="stylesheet" href="../assets/componentes.css">
     <link rel="stylesheet" href="../assets/paginas.css">
-    <script src="../assets/js/api.js" defer></script>
-    <script src="../assets/js/ui.js" defer></script>
-    <script src="../assets/js/auth.js" defer></script>
-    <script src="../assets/js/cadastro.js" defer></script>
+    <script src="../api/api.js" defer></script>
+    <script src="../api/ui.js" defer></script>
+    <script src="../api/auth.js" defer></script>
+    <script src="../api/cadastro.js" defer></script>
 </head>
 
 <body class="pagina-interna">
 
     <header class="barra-topo">
-        <a class="barra-topo__nome" href="mesas.html">Alfetti</a>
+        <a class="barra-topo-nome" href="mesas.html">Alfetti</a>
 
-        <nav class="barra-topo__menu" aria-label="Menu principal">
-            <a class="barra-topo__link" href="mesas.html">
+        <nav class="barra-topo-menu" aria-label="Menu principal">
+            <a class="barra-topo-link" href="mesas.html">
                 <button type="button" id="botao-mesas" class="botao">Mesas</button>
             </a>
-            <a class="barra-topo__link" href="historico.html">
+            <a class="barra-topo-link" href="historico.html">
                 <button type="button" id="botao-historico" class="botao">Histórico</button>
             </a>
-            <a class="barra-topo__link" href="produtos.html" data-perfil="gerente" hidden>
+            <a class="barra-topo-link" href="produtos.html" data-perfil="gerente" hidden>
                 <button type="button" id="botao-produtos" class="botao">Produtos</button>
             </a>
-            <a class="barra-topo__link" href="usuarios.html" data-perfil="gerente" aria-current="page" hidden>
+            <a class="barra-topo-link" href="usuarios.html" data-perfil="gerente" aria-current="page" hidden>
                 <button type="button" id="botao-usuarios" class="botao">Usuários</button>
             </a>
         </nav>
 
-        <div class="barra-topo__usuario">
+        <div class="barra-topo-usuario">
             <!-- O JS escreve "Nome · cargo" aqui -->
             <span id="usuario-logado"></span>
             <button type="button" id="botao-sair" class="botao">Sair</button>
@@ -43,16 +43,13 @@
 
     <main class="conteudo">
 
-        <div class="conteudo__topo">
-            <h1 id="titulo-formulario">Novo funcionário</h1>
-            <a class="botao" href="usuarios.html">Voltar para usuários</a>
-        </div>
-
         <p id="mensagem" class="mensagem" role="status" aria-live="polite"></p>
 
         <!-- ========== Formulário: cadastrar (sem ?id=) e editar (com ?id=) ========== -->
         <section class="painel" aria-labelledby="titulo-formulario">
-
+            <div class="conteudo-topo">
+                <h1 id="titulo-formulario">Novo funcionário</h1>
+            </div>
             <!-- Sem action e sem method: o JS captura o submit e envia com fetch -->
             <form id="form-usuario">
                 <!-- Vazio no cadastro; com o id do usuário na edição -->
@@ -73,7 +70,7 @@
                     <!-- required vale para o cadastro; na edição o JS remove e a senha fica opcional -->
                     <input type="password" id="senha" name="senha" required minlength="6" autocomplete="new-password"
                         aria-describedby="ajuda-senha">
-                    <span id="ajuda-senha" class="campo__ajuda">Mínimo de 6 caracteres.</span>
+                    <span id="ajuda-senha" class="campo-ajuda">Mínimo de 6 caracteres.</span>
                 </div>
 
                 <!-- Cargo só aparece na edição; no cadastro é sempre garçom -->
@@ -85,9 +82,10 @@
                     </select>
                 </div>
 
-                <div class="formulario__acoes">
+                <div class="formulario-acoes">
                     <button type="submit" id="botao-salvar" class="botao">Salvar</button>
                     <a class="botao botao--contorno" href="usuarios.html">Cancelar</a>
+                    <a class="botao" href="usuarios.html">Voltar para usuários</a>
                 </div>
             </form>
         </section>

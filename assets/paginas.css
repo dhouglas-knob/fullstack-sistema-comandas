@@ -155,13 +155,36 @@ Botão de sair de users
 }
 
 #titulo-formulario{
-  margin-bottom: 10px;
+  font-size: 50px;
+  color: var(--destaque);
 }
 
-.conteudo__topo {
+.conteudo-topo {
   margin: 20px;
 }
 
 .lista {
   margin-left: 20px;
+}
+
+.conteudo-topo{
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+/* ---------- Telas internas (cadastro, usuários, ...) ----------
+   <body class="pagina-interna">
+   Mesma ideia do login: overlay escuro por cima da foto Fundo-Sistema.jpg.
+   Para clarear/escurecer, mude os 0.45. Toda página nova com a classe
+   "pagina-interna" já ganha esse fundo automaticamente. */
+.pagina-interna {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)),
+    url('img/Fundo-Sistema.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: var(--fundo);
+  min-height: 100vh;
 }

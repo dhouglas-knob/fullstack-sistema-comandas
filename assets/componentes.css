@@ -70,7 +70,7 @@
 
 /* Campo de formulário 
 
-     campo__ajuda  texto de ajuda embaixo do campo
+     campo-ajuda  texto de ajuda embaixo do campo
      campo--erro   marca o campo com problema (borda e texto em vermelho)
 */
 
@@ -104,7 +104,7 @@ margin-left: 5%;
   resize: vertical;
 }
 
-.campo__ajuda {
+.campo-ajuda {
   font-size: 0.875rem;
   color: var(--texto-suave);
 }
@@ -115,7 +115,7 @@ margin-left: 5%;
   border-color: var(--erro);
 }
 
-.campo--erro .campo__ajuda {
+.campo--erro .campo-ajuda {
   color: var(--erro);
 }
 
@@ -154,11 +154,11 @@ margin-left: 5%;
 
 .painel {
   background: var(--papel);
-  border: 1px solid var(--linha);
+  border: 3px solid var(--destaque);
   border-radius: var(--raio-painel);
   padding: var(--esp-5);
   max-width: 55%;
-  margin: 0 auto;   /* 0 em cima e embaixo, auto nas laterais */
+  margin: 0 auto;
 }
 
 /* Barra Superior
@@ -174,19 +174,19 @@ margin-left: 5%;
   border-bottom: 2px solid var(--destaque);
 }
 
-.barra-topo__nome {
+.barra-topo-nome {
   font-family: var(--fonte-titulo);
   font-size: 2rem;
   color: var(--destaque);
 }
 
-.barra-topo__menu {
+.barra-topo-menu {
   margin-left: auto;          /* continua: empurra o menu para a direita */
   display: flex;              /* novo: links lado a lado */
   gap: 10px;          /* novo: espaço igual entre os links (substitui o margin-left: 5px) */
 }
 
-.barra-topo__link {
+.barra-topo-link {
   display: inline-flex;       /* novo: o <a> envolve o botão e o espaço em branco some */
   text-decoration: none;      /* novo: tira o sublinhado */
 }

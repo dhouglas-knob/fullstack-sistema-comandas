@@ -14,24 +14,24 @@
 
     <!-- ========== Barra do topo (igual em todas as páginas internas) ========== -->
     <header class="barra-topo">
-        <a class="barra-topo__nome" href="mesas.html">Alfetti</a>
+        <a class="barra-topo-nome" href="mesas.html">Alfetti</a>
 
-        <nav class="barra-topo__menu" aria-label="Menu principal">
-            <a class="barra-topo__link" href="mesas.html">
+        <nav class="barra-topo-menu" aria-label="Menu principal">
+            <a class="barra-topo-link" href="mesas.html">
                 <button type="button" id="botao-mesas" class="botao">Mesas</button>
             </a>
-            <a class="barra-topo__link" href="historico.html">
+            <a class="barra-topo-link" href="historico.html">
                 <button type="button" id="botao-historico" class="botao">Histórico</button>
             </a>
-            <a class="barra-topo__link" href="produtos.html" data-perfil="gerente" hidden>
+            <a class="barra-topo-link" href="produtos.html" data-perfil="gerente" hidden>
                 <button type="button" id="botao-produtos" class="botao">Produtos</button>
             </a>
-            <a class="barra-topo__link" href="usuarios.html" data-perfil="gerente" aria-current="page" hidden>
+            <a class="barra-topo-link" href="usuarios.html" data-perfil="gerente" aria-current="page" hidden>
                 <button type="button" id="botao-usuarios" class="botao">Usuários</button>
             </a>
         </nav>
 
-        <div class="barra-topo__usuario">
+        <div class="barra-topo-usuario">
             <!-- O JS escreve "Nome · cargo" aqui -->
             <span id="usuario-logado"></span>
             <button type="button" id="botao-sair" class="botao">Sair</button>
@@ -41,7 +41,7 @@
     <main class="conteudo">
 
         <!-- ========== Título e ação principal ========== -->
-        <div class="conteudo__topo">
+        <div class="conteudo-topo">
             <h1 id="titulo-formulario">Usuários</h1>
             <!-- É navegação (vai para outra página), por isso <a> com cara de botão -->
             <a class="botao" href="cadastro.html">Novo funcionário</a>
@@ -77,7 +77,7 @@
                 <td data-campo="nome"></td>
                 <td data-campo="email"></td>
                 <td data-campo="perfil"></td>
-                <td class="tabela__acoes">
+                <td class="tabela-acoes">
                     <!-- Editar vai para outra página: o JS completa o href com cadastro.html?id=... -->
                     <a class="botao botao--contorno" data-acao="editar" href="cadastro.html">Editar</a>
                     <!-- Excluir é ação na própria página: continua <button> -->
