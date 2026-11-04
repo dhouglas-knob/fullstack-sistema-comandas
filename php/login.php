@@ -10,10 +10,20 @@ if ($metodo == "POST")
 {
     $dados = json_decode(file_get_contents("php://input"), true);
 
-    $email = $dados['email'];
-    $senha = $dados['senha'];
+    $email = $dados['email'] ?? '';
+    $senha = $dados['senha'] ?? '';
 
-    $sql = "SELECT email, senha FROM user WHERE email = ?";
+    if (empty($email) || empty($senha)) {
+        http_response_code(400);
+
+        echo json_encode([
+            "erro" => "Email ou senha não preenchidos."
+        ]);
+
+        exit;
+    }
+
+    $sql = "SELECT * FROM user WHERE email = ?";
 
     $stmt = $conn->prepare($sql);
 
@@ -23,7 +33,33 @@ if ($metodo == "POST")
 
     $resultado = $stmt->get_result();
 
-    return $resultado;
+    $user = $resultado->fetch_assoc();
+
+    if ($email != $user['email'] || !password_verify($senha, $user['senha'])) {
+        http_response_code(400);
+
+        echo json_encode([
+            "erro" => "Email ou senha incorretos."
+            ]);
+
+        exit;
+    }
+
+    if (!$user['ativo']) {
+        http_response_code(400);
+
+        echo json_encode([
+            "erro" => "Usuário não ativo."
+        ]);
+
+        exit;
+    }
+
+    http_response_code(200);
+
+    echo json_encode([
+        "mensagem" => "Login efetuado com sucesso!"
+    ]);
 }
 
 else 
