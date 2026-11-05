@@ -9,14 +9,16 @@
     <link rel="stylesheet" href="../assets/componentes.css">
     <link rel="stylesheet" href="../assets/paginas.css">
     <script src="../api/users.js" defer></script>
+    <script src="../api/auth.js" defer></script>
 </head>
 
-<body class="pagina-interna">
+<body class="pagina-interna" data-acesso="gerente">
 
     <header class="barra-topo">
         <a class="barra-topo-nome" href="mesas.html">Alfetti</a>
 
         <nav class="barra-topo-menu" aria-label="Menu principal">
+            <span id="usuario-logado"></span>
             <a class="barra-topo-link" href="mesas.html">
                 <button type="button" id="botao-mesas" class="botao">Mesas</button>
             </a>
@@ -32,27 +34,16 @@
         </nav>
 
         <div class="barra-topo-usuario">
-            <!-- O JS escreve "Nome · cargo" aqui -->
-            <span id="usuario-logado"></span>
             <button type="button" id="botao-sair" class="botao">Sair</button>
         </div>
     </header>
 
     <main class="conteudo">
 
-        <!-- ========== Título e ação principal ========== -->
-        <div class="conteudo-topo">
-            <h1 id="titulo-formulario">Usuários</h1>
-            <!-- É navegação (vai para outra página), por isso <a> com cara de botão -->
-            <a class="botao" href="cadastro.html">Novo funcionário</a>
-        </div>
-
-        <!-- ========== Mensagens (erro e sucesso sempre aqui) ========== -->
-        <p id="mensagem" class="mensagem" role="status" aria-live="polite"></p>
-
-        <!-- ========== Lista de usuários ========== -->
-        <section class="lista" aria-labelledby="titulo-lista">
-            <h2 id="titulo-lista">Funcionários</h2>
+        <section class="painel" aria-labelledby="titulo-formulario">
+            <div class="conteudo-topo">
+                <h1 id="titulo-formulario">Usuários</h1>
+            </div>
 
             <table class="tabela">
                 <caption class="visualmente-oculto">Funcionários cadastrados no sistema</caption>
@@ -64,31 +55,17 @@
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
-                <!-- O JS preenche com os dados da API (sem dados simulados) -->
                 <tbody id="lista-usuarios"></tbody>
             </table>
 
             <p id="lista-vazia" class="texto-suave" hidden>Nenhum funcionário cadastrado.</p>
+
+            <div class="formulario-acoes">
+                <a class="botao" href="cadastro.html">Novo funcionário</a>
+            </div>
         </section>
 
-        <!-- ========== Modelo de linha: o JS clona para cada usuário ========== -->
-        <template id="modelo-linha-usuario">
-            <tr>
-                <td data-campo="nome"></td>
-                <td data-campo="email"></td>
-                <td data-campo="perfil"></td>
-                <td class="tabela-acoes">
-                    <!-- Editar vai para outra página: o JS completa o href com cadastro.html?id=... -->
-                    <a class="botao botao--contorno" data-acao="editar" href="cadastro.html">Editar</a>
-                    <!-- Excluir é ação na própria página: continua <button> -->
-                    <button type="button" class="botao botao--perigo" data-acao="excluir">Excluir</button>
-                </td>
-            </tr>
-        </template>
-
     </main>
-
-    <!-- ========== Scripts (ainda não existem; ordem: api, ui, auth, página) ========== -->
 </body>
 
 </html>

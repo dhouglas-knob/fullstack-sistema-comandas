@@ -8,18 +8,17 @@
     <link rel="stylesheet" href="../assets/base.css">
     <link rel="stylesheet" href="../assets/componentes.css">
     <link rel="stylesheet" href="../assets/paginas.css">
-    <script src="../api/api.js" defer></script>
-    <script src="../api/ui.js" defer></script>
-    <script src="../api/auth.js" defer></script>
     <script src="../api/cadastro.js" defer></script>
+    <script src="../api/auth.js" defer></script>
 </head>
 
-<body class="pagina-interna">
+<body class="pagina-interna" data-acesso="gerente">
 
     <header class="barra-topo">
         <a class="barra-topo-nome" href="mesas.html">Alfetti</a>
-
+        
         <nav class="barra-topo-menu" aria-label="Menu principal">
+            <span id="usuario-logado"></span>
             <a class="barra-topo-link" href="mesas.html">
                 <button type="button" id="botao-mesas" class="botao">Mesas</button>
             </a>
@@ -35,16 +34,11 @@
         </nav>
 
         <div class="barra-topo-usuario">
-            <!-- O JS escreve "Nome · cargo" aqui -->
-            <span id="usuario-logado"></span>
             <button type="button" id="botao-sair" class="botao">Sair</button>
         </div>
     </header>
 
     <main class="conteudo">
-
-        <!-- Faixa vazia que mantém o espaço entre o header e o painel -->
-        <p class="mensagem"></p>
 
         <!-- ========== Formulário: cadastrar (sem ?id=) e editar (com ?id=) ========== -->
         <section class="painel" aria-labelledby="titulo-formulario">
@@ -89,7 +83,7 @@
 
                 <div class="formulario-acoes">
                     <button type="submit" id="botao-salvar" class="botao">Salvar</button>
-                    <a class="botao botao--contorno" href="usuarios.html">Cancelar</a>
+                    <a class="botao botao-contorno" href="usuarios.html">Cancelar</a>
                     <a class="botao" href="usuarios.html">Voltar para usuários</a>
                 </div>
             </form>

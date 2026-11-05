@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 require_once "conexao.php";
 
@@ -35,8 +36,8 @@ if ($metodo == "POST")
 
     $user = $resultado->fetch_assoc();
 
-    if ($email != $user['email'] || !password_verify($senha, $user['senha'])) {
-        http_response_code(400);
+    if (!$user || !password_verify($senha, $user['senha'])) {
+        http_response_code(401);
 
         echo json_encode([
             "erro" => "Email ou senha incorretos."
@@ -46,7 +47,7 @@ if ($metodo == "POST")
     }
 
     if (!$user['ativo']) {
-        http_response_code(400);
+        http_response_code(403);
 
         echo json_encode([
             "erro" => "Usuário não ativo."
@@ -55,10 +56,21 @@ if ($metodo == "POST")
         exit;
     }
 
+    session_regenerate_id(true);
+
+    $_SESSION['usuario_id']     = $user['id'];
+    $_SESSION['usuario_nome']   = $user['nome'];
+    $_SESSION['usuario_email']  = $user['email'];
+    $_SESSION['usuario_funcao'] = $user['funcao'];
+    $_SESSION['usuario_ativo']  = $user['ativo'];
+
     http_response_code(200);
 
     echo json_encode([
-        "mensagem" => "Login efetuado com sucesso!"
+        "mensagem" => "Login efetuado com sucesso!",
+        "id"       => $user['id'],
+        "nome"     => $user['nome'],
+        "funcao"   => $user['funcao']
     ]);
 }
 
@@ -70,5 +82,3 @@ else
         "erro" => "Método não permitido."
     ]);
 }
-
-?>

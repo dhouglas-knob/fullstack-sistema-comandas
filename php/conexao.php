@@ -2,8 +2,10 @@
 
 $host = "localhost";
 $user = "root";
-$password = "dhouglasKnob";
+$password = "";
 $database = "restaurantedb";
+
+header("Content-Type: application/json");
 
 try {
     $conn = new mysqli($host, $user, $password, $database);
