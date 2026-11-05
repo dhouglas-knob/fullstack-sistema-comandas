@@ -43,13 +43,18 @@
 
     <main class="conteudo">
 
-        <p id="mensagem" class="mensagem" role="status" aria-live="polite"></p>
+        <!-- Faixa vazia que mantém o espaço entre o header e o painel -->
+        <p class="mensagem"></p>
 
         <!-- ========== Formulário: cadastrar (sem ?id=) e editar (com ?id=) ========== -->
         <section class="painel" aria-labelledby="titulo-formulario">
             <div class="conteudo-topo">
                 <h1 id="titulo-formulario">Novo funcionário</h1>
             </div>
+
+            <!-- O JS escreve aqui o resultado do cadastro (sucesso ou erro) -->
+            <p id="mensagem" class="mensagem" role="status" aria-live="polite"></p>
+
             <!-- Sem action e sem method: o JS captura o submit e envia com fetch -->
             <form id="form-usuario">
                 <!-- Vazio no cadastro; com o id do usuário na edição -->

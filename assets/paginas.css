@@ -129,6 +129,11 @@ Botão de sair de users
   align-items: center; 
 }
 
+/* Mensagem de retorno dentro do painel: centralizada como o título */
+.painel .mensagem {
+  text-align: center;
+}
+
 /* Background editado */
 .pagina-interna {
   background-image:

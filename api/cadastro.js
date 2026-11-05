@@ -10,13 +10,27 @@ form.addEventListener("submit", async evento => {
         senha: form.senha.value
     };
     
-    const resposta = await fetch("../php/user.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(dados)
-    });
+    const mensagem = document.getElementById("mensagem");
+    mensagem.classList.remove("mensagem--sucesso", "mensagem--erro");
 
-    const resultado = await resposta.json();
-    console.log(resposta.status, resultado);
-    
+    try {
+        const resposta = await fetch("../php/user.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(dados)
+        });
+
+        const resultado = await resposta.json();
+
+        if (resposta.ok) {
+            mensagem.textContent = resultado.mensagem;
+            mensagem.classList.add("mensagem--sucesso");
+        } else {
+            mensagem.textContent = resultado.erro || "Não foi possível cadastrar.";
+            mensagem.classList.add("mensagem--erro");
+        }
+    } catch (erro) {
+        mensagem.textContent = "Não foi possível cadastrar. Tente novamente.";
+        mensagem.classList.add("mensagem--erro");
+    }
 });
