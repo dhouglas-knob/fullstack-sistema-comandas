@@ -32,6 +32,16 @@ elseif ($metodo == "POST")
     $email = $dados['email'];
     $senha = password_hash($dados['senha'], PASSWORD_DEFAULT);
 
+    if (!isset($dados['ativo'], $dados['funcao'], $dados['nome'], $dados['email'], $dados['senha'])) {
+        http_response_code(400);
+
+        echo json_encode([
+            "erro" => "Campos obrigatórios ausentes."
+        ]);
+
+        exit;
+    }
+
     $sql = "INSERT INTO user (ativo, funcao, nome, email, senha)
             VALUES (?, ?, ?, ?, ?)";
 
@@ -59,6 +69,16 @@ elseif ($metodo == "PUT")
     $email = $dados['email'];
     $senha = password_hash($dados['senha'], PASSWORD_DEFAULT);
 
+    if (!isset($dados['ativo'], $dados['funcao'], $dados['nome'], $dados['email'], $dados['senha'])) {
+        http_response_code(400);
+
+        echo json_encode([
+            "erro" => "Campos obrigatórios ausentes."
+        ]);
+
+        exit;
+    }
+
     $sql = "UPDATE user 
             SET ativo = ?, funcao = ?, nome = ?, email = ?, senha = ?
             WHERE id = ?";
@@ -81,6 +101,16 @@ elseif ($metodo == "DELETE")
     $dados = json_decode(file_get_contents("php://input"), true);
 
     $id = $dados['id'];
+
+    if (!isset($dados['id'])) {
+        http_response_code(400);
+
+        echo json_encode([
+            "erro" => "Campo obrigatório ausente."
+        ]);
+
+        exit;
+    }
 
     $sql = "DELETE FROM user 
             WHERE id = ?";

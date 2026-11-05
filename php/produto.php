@@ -32,6 +32,16 @@ elseif ($metodo == "POST")
     $valor = $dados['valor'];
     $obsPedido = $dados['obs_pedido'];
 
+    if (!isset($dados['ativo'], $dados['nome'], $dados['categoria'], $dados['valor'], $dados['obs_pedido'])) {
+        http_response_code(400);
+
+        echo json_encode([
+            "erro" => "Campos obrigatórios ausentes."
+        ]);
+
+        exit;
+    }
+
     $sql = "INSERT INTO produto (ativo, nome, categoria, valor, obs_pedido)
             VALUES (?, ?, ?, ?, ?)";
 
@@ -59,6 +69,16 @@ elseif ($metodo == "PUT")
     $valor = $dados['valor'];
     $obsPedido = $dados['obs_pedido'];
 
+    if (!isset($dados['ativo'], $dados['nome'], $dados['categoria'], $dados['valor'], $dados['obs_pedido'])) {
+        http_response_code(400);
+
+        echo json_encode([
+            "erro" => "Campos obrigatórios ausentes."
+        ]);
+
+        exit;
+    }
+
     $sql = "UPDATE produto
             SET ativo = ?, nome = ?, categoria = ?, valor = ?, obs_pedido = ?
             WHERE id = ?";
@@ -81,6 +101,16 @@ elseif ($metodo == "DELETE")
     $dados = json_decode(file_get_contents("php://input"), true);
 
     $id = $dados['id'];
+
+    if (!isset($dados['id'])) {
+        http_response_code(400);
+
+        echo json_encode([
+            "erro" => "Campo obrigatório ausente."
+        ]);
+
+        exit;
+    }
 
     $sql = "DELETE FROM produto
             WHERE id = ?";
