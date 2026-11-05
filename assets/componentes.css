@@ -1,10 +1,4 @@
-/* ==========================================================
-   componentes.css
-   Peças reutilizáveis: botão, campo de formulário, mensagem
-   e painel. Usa só as variáveis definidas no base.css.
-   Para mudar o visual de uma peça em todas as telas,
-   altere aqui.
-   ========================================================== */
+/* Componentes que se repetem */
 
 
 /* Botão 
@@ -120,11 +114,10 @@ margin-left: 5%;
 }
 
 
-/* ---------- Mensagem ----------
-   Uso: <p id="mensagem" class="mensagem" role="alert"></p>
-   O JavaScript escreve o texto e soma uma das variações:
-     mensagem--erro, mensagem--sucesso ou mensagem--aviso
-   A altura mínima evita que a tela "pule" quando o texto aparece.
+/* Mensagem 
+    O JavaScript escreve o texto e soma uma das variações:
+    mensagem--erro, mensagem--sucesso ou mensagem--aviso
+    A altura mínima evita que a tela "pule" quando o texto aparece.
 */
 
 .mensagem {
@@ -161,10 +154,7 @@ margin-left: 5%;
   margin: 0 auto;
 }
 
-/* Barra Superior
-
-
-*/
+/* Barra Superior */
 
 .barra-topo {
   display: flex;
@@ -181,12 +171,12 @@ margin-left: 5%;
 }
 
 .barra-topo-menu {
-  margin-left: auto;          /* continua: empurra o menu para a direita */
-  display: flex;              /* novo: links lado a lado */
-  gap: 10px;          /* novo: espaço igual entre os links (substitui o margin-left: 5px) */
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
 }
 
 .barra-topo-link {
-  display: inline-flex;       /* novo: o <a> envolve o botão e o espaço em branco some */
-  text-decoration: none;      /* novo: tira o sublinhado */
+  display: inline-flex;
+  text-decoration: none;
 }

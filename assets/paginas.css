@@ -1,13 +1,6 @@
-/* ==========================================================
-   paginas.css
-   Ajustes que só uma ou duas telas precisam.
-   Por enquanto: o cartão centralizado do login e do cadastro.
-   ========================================================== */
+/* Ajustes especificos de paginas */
 
-/* ---------- Login e cadastro ----------
-   <body class="pagina-central">
-     <main class="cartao-central"> ... </main>
-*/
+/* lOGIN */
 
 .pagina-central {
   display: grid;
@@ -17,24 +10,19 @@
   padding: 0;
   padding-right: 5%;
 
-  /* Imagem de fundo: salve em assets/img/fundo-login.jpg (caminho relativo a este CSS).
-     O primeiro item da lista é o overlay: um gradiente preto semitransparente
-     por cima da foto. Para clarear/escurecer, mude os 0.55 (0 = sem escurecer, 1 = preto).
-     Se a imagem não existir, só o overlay aparece sobre a cor --fundo. */
+  /*Primeiro fundo SOMENTE NO LOGIN*/
   background-image:
     linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
     url('img/fundo-login.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  /* fixed: a imagem não se mexe se a página rolar em telas pequenas */
   background-attachment: fixed;
   background-color: var(--fundo);
 }
 
-/* Cabeçalho com o nome do restaurante.
-   Fica "fixed" (preso no topo, ocupando a largura toda) para não virar
-   um item do grid do body, o que bagunçaria a posição do cartão. */
+/* Cabeçalho com o nome do restaurante
+Essa kaceta ta fixo pra entrar no grid podepa */
 .header {
   position: fixed;
   top: 0;
@@ -42,37 +30,11 @@
   right: 0;
   display: flex;
   align-items: center;
-  /* Padding vertical maior = header mais alto, dando mais destaque ao nome */
   padding: var(--esp-5) var(--esp-6);
   /* Verde do --destaque (#1F5A3E = rgb(31, 90, 62)) com opacidade de 70%.
      Para a foto aparecer mais, diminua o 0.7; para ficar mais sólido, aumente. */
   background: rgba(0, 0, 0, 0.7);
   border-bottom: 2px solid var(--destaque);
-}
-
-/* Botão "Página Inicial" na direita do header: margin-left: auto empurra
-   ele até o canto direito, deixando o nome na esquerda */
-#button-retorno {
-  margin-left: auto;
-}
-
-/* Visual do botão: contorno branco e fundo transparente (combina com o header escuro).
-   No hover ele se preenche de branco com o texto na cor do destaque. */
-#button-retorno button {
-  min-height: 48px;
-  padding: 0 var(--esp-6);
-  border: 2px solid var(--papel);
-  border-radius: var(--raio-botao);
-  background: transparent;
-  color: var(--papel);
-  font-size: 1.125rem;
-  font-weight: 500;
-  transition: background 0.2s, color 0.2s;
-}
-
-#button-retorno button:hover {
-  background: var(--papel);
-  color: var(--destaque);
 }
 
 .header-nome {
@@ -82,8 +44,7 @@
 }
 
 /* Mensagem de boas-vindas na área vazia à esquerda do cartão.
-   Fica "fixed" pelo mesmo motivo do header: não entrar no grid do body.
-   A largura máxima desconta o cartão (400px) e as margens, para nunca ficar por baixo dele. */
+   Fica "fixed" pelo mesmo motivo do header: não entrar no grid do body. */
 .boas-vindas {
   position: fixed;
   top: 50%;
@@ -91,7 +52,6 @@
   transform: translateY(-50%);
   max-width: calc(100% - 400px - 15%);
   color: var(--papel);
-  /* Sombra no texto ajuda a leitura sobre a foto */
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
@@ -114,15 +74,11 @@
 .cartao-central {
   width: 100%;
   max-width: 400px;
-  /* Altura do cartão: metade da área do grid (como era antes).
-     Mude o 50% para deixar mais alto ou mais baixo. */
   background: var(--papel);
   border: 2px solid var(--destaque);
   border-radius: var(--raio-painel);
   padding-bottom: var(--esp-5);
   box-shadow: 0 0 20px var(--destaque);
-  /* Removido "margin-right: 5%": o body já tem padding-right: 5%,
-     então o cartão ficava afastado da borda duas vezes. */
 }
 
 .cartao-central h1 {
@@ -172,11 +128,8 @@ Botão de sair de users
   justify-content: center;
   align-items: center; 
 }
-/* ---------- Telas internas (cadastro, usuários, ...) ----------
-   <body class="pagina-interna">
-   Mesma ideia do login: overlay escuro por cima da foto Fundo-Sistema.jpg.
-   Para clarear/escurecer, mude os 0.45. Toda página nova com a classe
-   "pagina-interna" já ganha esse fundo automaticamente. */
+
+/* Background editado */
 .pagina-interna {
   background-image:
     linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)),
