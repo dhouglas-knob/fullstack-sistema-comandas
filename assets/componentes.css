@@ -3,9 +3,8 @@
 
 /* Botão 
    Variações (somam à classe .botao):
-     botao--contorno  só a borda, para ações secundárias
-     botao--perigo    para ações que apagam
-     botao--bloco     ocupa a largura toda
+     botao-contorno  fundo claro com borda e texto em destaque; inverte no hover
+     botao-v         botão vermelho
 */
 
 .botao {
@@ -40,32 +39,34 @@
   cursor: not-allowed;
 }
 
-.botao--contorno {
-  background: transparent;
-  border-color: var(--texto);
-  color: var(--texto);
+.botao-contorno {
+  background: var(--fundo);
+  border-color: var(--destaque);
+  color: var(--destaque);
 }
 
-.botao--contorno:hover {
-  background: var(--fundo-selecionado);
-  filter: none;
+.botao-contorno:hover {
+  background: var(--destaque);
+  border-color: var(--destaque);
+  color: var(--fundo);
 }
 
-.botao--perigo {
+/* Botão vermelho */
+.botao-v {
   background: var(--erro);
   border-color: var(--erro);
   color: #FFFFFF;
 }
 
-.botao--bloco {
-  width: 100%;
+.botao-v:hover {
+  background: #9E2F18;
+  border-color: #9E2F18;
 }
 
 
-/* Campo de formulário 
+/* Campo de formulário
 
      campo-ajuda  texto de ajuda embaixo do campo
-     campo--erro   marca o campo com problema (borda e texto em vermelho)
 */
 
 .campo {
@@ -76,14 +77,13 @@
 }
 
 .campo label {
-margin-left: 5%;
+  margin-left: 5%;
   font-size: 0.9375rem;
   font-weight: 500;
 }
 
 .campo input,
-.campo select,
-.campo textarea {
+.campo select {
   width: 90%;
   min-height: var(--altura-controle);
   padding: var(--esp-2) var(--esp-3);
@@ -93,30 +93,15 @@ margin-left: 5%;
   margin-left: 5%;
 }
 
-.campo textarea {
-  min-height: 96px;
-  resize: vertical;
-}
-
 .campo-ajuda {
   font-size: 0.875rem;
   color: var(--texto-suave);
 }
 
-.campo--erro input,
-.campo--erro select,
-.campo--erro textarea {
-  border-color: var(--erro);
-}
 
-.campo--erro .campo-ajuda {
-  color: var(--erro);
-}
-
-
-/* Mensagem 
+/* Mensagem
     O JavaScript escreve o texto e soma uma das variações:
-    mensagem--erro, mensagem--sucesso ou mensagem--aviso
+    mensagem-erro ou mensagem-sucesso
     A altura mínima evita que a tela "pule" quando o texto aparece.
 */
 
@@ -126,16 +111,12 @@ margin-left: 5%;
   font-weight: 500;
 }
 
-.mensagem--erro {
+.mensagem-erro {
   color: var(--erro);
 }
 
-.mensagem--sucesso {
+.mensagem-sucesso {
   color: var(--sucesso);
-}
-
-.mensagem--aviso {
-  color: var(--ambar-texto);
 }
 
 
@@ -151,7 +132,7 @@ margin-left: 5%;
   border-radius: var(--raio-painel);
   padding: var(--esp-5);
   max-width: 55%;
-  margin: 0 auto;
+  margin: 50px auto;
 }
 
 /* Barra Superior */
@@ -173,10 +154,45 @@ margin-left: 5%;
 .barra-topo-menu {
   margin-left: auto;
   display: flex;
+  align-items: center;
   gap: 10px;
+}
+
+#usuario-logado {
+  font-family: var(--fonte-talao);
 }
 
 .barra-topo-link {
   display: inline-flex;
   text-decoration: none;
+}
+
+/* Tabela */
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--esp-4);
+  background: var(--papel);
+  border-bottom: 2px solid var(--destaque);
+  border-left: 2px solid var(--destaque);
+}
+
+.tabela th,
+.tabela td {
+  padding: var(--esp-3);
+  text-align: left;
+  border-bottom: 1px solid var(--fundo-selecionado);
+  border-right: 2px solid var(--destaque);
+}
+
+.tabela th {
+  background: var(--destaque);
+  color: var(--sobre-destaque);
+  font-weight: 500;
+}
+
+.tabela-acoes {
+  display: flex;
+  gap: var(--esp-2);
 }

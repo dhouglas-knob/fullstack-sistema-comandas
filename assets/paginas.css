@@ -31,7 +31,7 @@ Essa kaceta ta fixo pra entrar no grid podepa */
   display: flex;
   align-items: center;
   padding: var(--esp-5) var(--esp-6);
-  /* Verde do --destaque (#1F5A3E = rgb(31, 90, 62)) com opacidade de 70%.
+  /* Preto com 70% de opacidade.
      Para a foto aparecer mais, diminua o 0.7; para ficar mais sólido, aumente. */
   background: rgba(0, 0, 0, 0.7);
   border-bottom: 2px solid var(--destaque);
@@ -116,21 +116,22 @@ Botão de sair de users
 }
 
 .conteudo-topo {
-  margin: 20px;
-}
-
-.lista {
-  margin-left: 20px;
-}
-
-.conteudo-topo{
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
+  margin: 20px;
 }
 
 /* Mensagem de retorno dentro do painel: centralizada como o título */
 .painel .mensagem {
+  text-align: center;
+}
+
+/* Mensagem do login: mesma largura do botão Entrar (90%) e texto centralizado */
+#form-login #mensagem {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
   text-align: center;
 }
 

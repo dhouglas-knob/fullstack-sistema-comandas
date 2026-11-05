@@ -39,16 +39,12 @@
   /* Cores */
   --fundo: #F4F4F2;
   --fundo-selecionado: #E8E8E5;
-  --linha: #D8D8D4;
   --papel: #FFFFFF;
   --texto: #1F2933;
   --texto-suave: #5B6670;
   --destaque: #123524;
   --sobre-destaque: #FFFFFF;
   --sucesso: #2F855A;
-  --ambar: #F0B429;
-  --ambar-borda: #8A5200;
-  --ambar-texto: #6A4103;
   --erro: #C23B1F;
 
   /* Fontes (as reservas entram se o arquivo não carregar) */
@@ -57,7 +53,6 @@
   --fonte-texto: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   /* Cantos */
-  --raio-talao: 2px;
   --raio-botao: 3px;
   --raio-painel: 4px;
 
@@ -74,7 +69,7 @@
 }
 
 
-/* ---------- 3. Reset básico ---------- */
+/* Reset básico */
 
 *,
 *::before,
@@ -120,7 +115,7 @@ button {
 }
 
 
-/* ---------- 4. Página ---------- */
+/*  4. Página  */
 
 body {
   min-height: 100vh;
@@ -133,7 +128,7 @@ body {
 }
 
 
-/* ---------- 5. Títulos e texto ---------- */
+/*  5. Títulos e texto  */
 
 h1,
 h2,
@@ -165,7 +160,7 @@ a:hover {
 }
 
 
-/* ---------- 6. Foco visível (para quem usa teclado) ---------- */
+/*  6. Foco visível  */
 
 :focus-visible {
   outline: 2px solid var(--destaque);
@@ -173,7 +168,7 @@ a:hover {
 }
 
 
-/* ---------- 7. Utilitário ---------- */
+/*  7. Utilitário  */
 
 /* Esconde da tela, mas mantém para leitores de tela */
 .visualmente-oculto {
