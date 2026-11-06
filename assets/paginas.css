@@ -115,6 +115,14 @@ Botão de sair de users
   color: var(--destaque);
 }
 
+#titulo-mesas {
+  font-size: 50px;
+  color: var(--destaque);
+  background-color: var(--fundo);
+  padding: 10px;
+  border-radius: var(--raio-painel);
+}
+
 .conteudo-topo {
   display: flex;
   justify-content: center;
@@ -146,4 +154,201 @@ Botão de sair de users
   background-attachment: fixed;
   background-color: var(--fundo);
   min-height: 100vh;
+}
+
+/* ==========================================================
+   Tela de mesas
+   ========================================================== */
+
+/* Duas colunas: lateral fixa (280px) + grade com o resto */
+.conteudo-mesas {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: var(--esp-5);
+  align-items: start;          /* a lateral não estica até a altura da grade */
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--esp-5);
+
+  /* Cinza da mesa ocupada (tom da imagem de referência) */
+  --mesa-ocupada: #C9CDD0;
+  --mesa-ocupada-borda: #A3A9AE;
+}
+
+/* ---------- Lateral ---------- */
+
+.lateral-mesas {
+  position: sticky;            /* fica parada enquanto a grade rola */
+  top: var(--esp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+  padding: var(--esp-5);
+  background: var(--papel);
+  border: 3px solid var(--destaque);
+  border-radius: var(--raio-painel);
+}
+
+/* O #titulo-mesas já tem fundo e padding; dentro da lateral não precisa */
+.lateral-mesas #titulo-mesas {
+  padding: 0;
+  background: none;
+  font-size: 2.5rem;
+}
+
+.lateral-subtitulo {
+  padding-top: var(--esp-4);
+  border-top: 1px solid var(--linha);
+  color: var(--texto);
+}
+
+/* Legenda */
+.legenda {
+  display: flex;
+  gap: var(--esp-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;            /* tira as bolinhas da lista */
+}
+
+.legenda-item {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  color: var(--texto-suave);
+}
+
+.legenda-cor {
+  display: inline-block;       /* <span> é inline e ignoraria largura/altura */
+  width: 14px;
+  height: 14px;
+  border-radius: var(--raio-talao);
+}
+
+.legenda-cor-livre {
+  background: var(--mesa-livre);
+}
+
+.legenda-cor-ocupada {
+  background: var(--mesa-ocupada);
+  border: 1px solid var(--mesa-ocupada-borda);
+}
+
+/* Resumo (rótulo à esquerda, valor à direita) */
+.resumo-mesas {
+  margin: 0;
+}
+
+.resumo-linha {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--esp-2) 0;
+  border-bottom: 1px dashed #5B6670;
+}
+
+.resumo-linha dt {
+  color: var(--texto-suave);
+}
+
+.resumo-linha dd {
+  margin: 0;
+  font-family: var(--fonte-talao);
+  color: var(--texto);
+}
+
+/* Lista "Abertas agora" */
+.lista-abertas {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lista-abertas li {
+  padding: var(--esp-2) 0;
+  border-bottom: 1px solid var(--linha);
+  font-family: var(--fonte-talao);
+  font-size: 0.9375rem;
+}
+
+/* ---------- Grade de mesas ---------- */
+
+.area-mesas .mensagem {
+  text-align: center;
+}
+
+.grade-mesas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);   /* 4 colunas de largura igual */
+  gap: var(--esp-4);
+}
+
+/* Cartão da mesa (vale para <button> e para <a>) */
+.mesa {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+  width: 100%;
+  min-height: 160px;
+  padding: var(--esp-5);
+  border: 2px solid transparent;
+  border-radius: var(--raio-painel);
+  text-align: left;            /* o <button> centraliza por padrão */
+  text-decoration: none;       /* o <a> sublinha por padrão */
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.mesa-numero {
+  font-family: var(--fonte-titulo);
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.mesa-status,
+.mesa-total {
+  font-family: var(--fonte-talao);
+  font-size: 0.9375rem;
+}
+
+.mesa-total {
+  margin-top: auto;            /* empurra o total para o fundo do cartão */
+}
+
+/* Livre: verde preenchido */
+.mesa-livre {
+  background: var(--mesa-livre);
+  border-color: var(--mesa-livre);
+  color: var(--sobre-destaque);
+}
+
+.mesa-livre:hover {
+  background: var(--mesa-livre-hover);
+  border-color: var(--mesa-livre-hover);
+}
+
+/* Ocupada: cinza com borda mais escura */
+.mesa-ocupada {
+  background: var(--mesa-ocupada);
+  border-color: var(--mesa-ocupada-borda);
+  color: var(--texto);
+}
+
+.mesa-ocupada:hover {
+  border-color: var(--texto);
+}
+
+/* ---------- Telas menores ---------- */
+
+@media (max-width: 1000px) {
+  .conteudo-mesas {
+    grid-template-columns: 1fr;            /* lateral em cima, grade embaixo */
+  }
+
+  .lateral-mesas {
+    position: static;
+  }
+
+  .grade-mesas {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

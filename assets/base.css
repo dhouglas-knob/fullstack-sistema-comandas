@@ -46,6 +46,10 @@
   --sobre-destaque: #FFFFFF;
   --sucesso: #2F855A;
   --erro: #C23B1F;
+  --mesa-livre: #2E7D52;
+  --mesa-livre-hover: #276749;
+  --mesa-ocupada: #C2C2C2;
+  --mesa-ocupada-borda: #8F8F8F;
 
   /* Fontes (as reservas entram se o arquivo não carregar) */
   --fonte-titulo: 'Lora', Georgia, serif;
