@@ -8,18 +8,42 @@ $metodo = $_SERVER['REQUEST_METHOD'];
 
 if ($metodo == "GET")
 {
-    $sql = "SELECT * FROM produto";
+    $id = $_GET['id'] ?? null;
 
-    $resultado = $conn->query($sql);
+    if ($id) {
+        $sql = "SELECT * FROM produto WHERE id = ?";
 
-    $produtos = [];
+        $stmt = $conn->prepare($sql);
 
-    while ($linha = $resultado->fetch_assoc())
-    {
-        $produtos[] = $linha;
+        $stmt->bind_param("i", $id);
+
+        $stmt->execute();
+
+        $resultado = $stmt->get_result();
+
+        $produto = [];
+
+        while ($linha = $resultado->fetch_assoc()) {
+            $produto[] = $linha;
+        }
+
+        echo json_encode($produto);
     }
 
-    echo json_encode($produtos);
+    else {
+        $sql = "SELECT * FROM produto";
+
+        $resultado = $conn->query($sql);
+
+        $produtos = [];
+
+        while ($linha = $resultado->fetch_assoc())
+        {
+            $produtos[] = $linha;
+        }
+
+        echo json_encode($produtos);
+    }
 }
 
 elseif ($metodo == "POST")
