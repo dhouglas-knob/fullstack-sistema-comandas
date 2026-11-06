@@ -1,13 +1,117 @@
 <!DOCTYPE html>
-    <html lang="pt-BR">
+<html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
-    <title>Mesas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesas · Alfetti</title>
+    <link rel="stylesheet" href="../assets/base.css">
+    <link rel="stylesheet" href="../assets/componentes.css">
+    <link rel="stylesheet" href="../assets/paginas.css">
+    <script src="../api/auth.js" defer></script>
+    <script src="../api/mesas.js" defer></script>
 </head>
-<body>
-    <a href="cadastro.html">Cadastrar Funcionário</a>
-    <a href="usuarios.html">Ver Funcionários</a>
-    <a href="historico.html">Histórico</a>
-    <a href="produtos.html">Produtos</a>
+
+<!-- Sem data-acesso: garçom e gerente podem entrar aqui -->
+<body class="pagina-interna">
+
+    <header class="barra-topo">
+        <a class="barra-topo-nome" href="mesas.html">Alfetti</a>
+
+        <nav class="barra-topo-menu" aria-label="Menu principal">
+            <span id="usuario-logado"></span>
+            <a class="barra-topo-link" href="mesas.html" aria-current="page">
+                <button type="button" id="botao-mesas" class="botao">Mesas</button>
+            </a>
+            <a class="barra-topo-link" href="historico.html">
+                <button type="button" id="botao-historico" class="botao">Histórico</button>
+            </a>
+            <a class="barra-topo-link" href="produtos.html" data-perfil="gerente" hidden>
+                <button type="button" id="botao-produtos" class="botao">Produtos</button>
+            </a>
+            <a class="barra-topo-link" href="usuarios.html" data-perfil="gerente" hidden>
+                <button type="button" id="botao-usuarios" class="botao">Usuários</button>
+            </a>
+        </nav>
+
+        <div class="barra-topo-usuario">
+            <button type="button" id="botao-sair" class="botao">Sair</button>
+        </div>
+    </header>
+
+        <main class="conteudo conteudo-mesas">
+
+        <!-- ========== Lateral: título, legenda, resumo e abertas agora ========== -->
+        <aside class="lateral-mesas">
+
+            <h1 id="titulo-mesas">Mesas</h1>
+
+            <!-- Legenda das cores (o texto garante que nada depende só de cor) -->
+            <ul class="legenda">
+                <li class="legenda-item">
+                    <span class="legenda-cor legenda-cor-livre" aria-hidden="true"></span>
+                    Livre
+                </li>
+                <li class="legenda-item">
+                    <span class="legenda-cor legenda-cor-ocupada" aria-hidden="true"></span>
+                    Ocupada
+                </li>
+            </ul>
+
+            <!-- Resumo: o mesas.js preenche os números -->
+            <dl class="resumo-mesas">
+                <div class="resumo-linha">
+                    <dt>Livres</dt>
+                    <dd id="total-livres">0</dd>
+                </div>
+                <div class="resumo-linha">
+                    <dt>Ocupadas</dt>
+                    <dd id="total-ocupadas">0</dd>
+                </div>
+                <div class="resumo-linha">
+                    <dt>Em aberto</dt>
+                    <dd id="total-aberto">R$ 0,00</dd>
+                </div>
+            </dl>
+
+            <!-- Comandas abertas: o mesas.js cria um <li> por comanda -->
+            <h2 class="lateral-subtitulo">Abertas agora</h2>
+            <ul id="lista-abertas" class="lista-abertas"></ul>
+            <p id="nenhuma-aberta" class="texto-suave">Nenhuma comanda aberta.</p>
+
+        </aside>
+
+        <!-- ========== Área principal: mensagens e grade ========== -->
+        <section class="area-mesas">
+
+            <!-- Mensagens (fora de qualquer flex) -->
+            <p id="mensagem" class="mensagem" role="status" aria-live="polite"></p>
+
+            <!-- Grade das 12 mesas: o mesas.js vai criar as mesas aqui dentro -->
+            <div id="grade-mesas" class="grade-mesas">
+
+                <!-- ===== TESTE: apagar quando o mesas.js estiver gerando a grade ===== -->
+                <button type="button" class="mesa mesa-livre" data-mesa="1">
+                    <span class="mesa-numero">01</span>
+                    <span class="mesa-status">livre</span>
+                </button>
+
+                <a class="mesa mesa-ocupada" href="comanda-detalhe.html?id=5">
+                    <span class="mesa-numero">02</span>
+                    <span class="mesa-status">1 comanda</span>
+                    <span class="mesa-total">R$ 18,50</span>
+                </a>
+
+                <button type="button" class="mesa mesa-livre" data-mesa="3">
+                    <span class="mesa-numero">03</span>
+                    <span class="mesa-status">livre</span>
+                </button>
+                <!-- ===== FIM DO TESTE ===== -->
+
+            </div>
+        </section>
+
+    </main>
 </body>
+
 </html>
