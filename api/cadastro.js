@@ -18,7 +18,8 @@ form.addEventListener("submit", evento => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dados)
     })
-        .then(resposta => resposta.json().then(resultado => ({ resposta, resultado })))
+        .then(resposta => resposta.json()
+        .then(resultado => ({ resposta, resultado })))
         .then(({ resposta, resultado }) => {
             if (resposta.ok) {
                 mensagem.textContent = resultado.mensagem;
