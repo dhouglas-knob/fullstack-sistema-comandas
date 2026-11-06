@@ -7,6 +7,7 @@ fetch('../php/sessao.php')
         } else {
             const msg = document.querySelector("#usuario-logado");
             msg.textContent = `${dados.nome} . ${dados.funcao === 'garcom' ? 'Garçom' : 'Gerente'}`;
+            document.body.dataset.usuarioId = dados.id;
 
             if (dados.funcao === 'gerente') {
                 const Liberacao = document.querySelectorAll("[data-perfil='gerente']");
