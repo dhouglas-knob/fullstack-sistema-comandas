@@ -2,6 +2,8 @@
 
 session_start();
 
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
 header("Content-Type: application/json");
 
 if (!isset($_SESSION['usuario_id'])) {
@@ -112,9 +114,8 @@ elseif ($metodo == "PUT")
     $funcao = $dados['funcao'];
     $nome = $dados['nome'];
     $email = $dados['email'];
-    $senha = password_hash($dados['senha'], PASSWORD_DEFAULT);
 
-    if (!isset($dados['ativo'], $dados['funcao'], $dados['nome'], $dados['email'], $dados['senha'])) {
+    if (!isset($dados['ativo'], $dados['funcao'], $dados['nome'], $dados['email'])) {
         http_response_code(400);
 
         echo json_encode([
@@ -124,13 +125,27 @@ elseif ($metodo == "PUT")
         exit;
     }
 
-    $sql = "UPDATE user 
-            SET ativo = ?, funcao = ?, nome = ?, email = ?, senha = ?
-            WHERE id = ?";
+    if (isset($dados['senha']) && $dados['senha'] != '') {
+        $senha = password_hash($dados['senha'], PASSWORD_DEFAULT);
 
-    $stmt = $conn->prepare($sql);
+        $sql = "UPDATE user
+                SET ativo = ?, funcao = ?, nome = ?, email = ?, senha = ?
+                WHERE id = ?";
 
-    $stmt->bind_param("issssi", $ativo, $funcao, $nome, $email, $senha, $id);
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bind_param("issssi", $ativo, $funcao, $nome, $email, $senha, $id);
+    }
+
+    else {
+        $sql = "UPDATE user
+                SET ativo = ?, funcao = ?, nome = ?, email = ?
+                WHERE id = ?";
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bind_param("isssi", $ativo, $funcao, $nome, $email, $id);
+    }
 
     $stmt->execute();
 
