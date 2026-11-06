@@ -2,7 +2,7 @@
 
 $host = "localhost";
 $user = "root";
-$password = "";
+$password = "dhouglasKnob";
 $database = "restaurantedb";
 
 header("Content-Type: application/json");
