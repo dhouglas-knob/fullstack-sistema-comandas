@@ -1,8 +1,20 @@
 <?php
 
-require_once "conexao.php";
+session_start();
 
 header("Content-Type: application/json");
+
+if (!isset($_SESSION['usuario_id'])) {
+    http_response_code(401);
+
+    echo json_encode([
+        "erro" => "Usuário não autenticado."
+    ]);
+
+    exit;
+} 
+
+require_once "conexao.php";
 
 $metodo = $_SERVER['REQUEST_METHOD'];
 

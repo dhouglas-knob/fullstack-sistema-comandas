@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-require_once "conexao.php";
-
 header("Content-Type: application/json");
+
+require_once "conexao.php";
 
 $metodo = $_SERVER['REQUEST_METHOD'];
 
