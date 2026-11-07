@@ -121,7 +121,10 @@ elseif ($metodo == "PUT")
 {
     $dados = json_decode(file_get_contents("php://input"), true);
 
-    if (!isset($dados['id'], $dados['ativo'], $dados['funcao'], $dados['nome'], $dados['email'], $dados['senha'])) {
+    // Valida ANTES de ler os campos (senão o PHP solta warnings em HTML e quebra o JSON)
+    // A senha não é obrigatória: se não vier, a senha atual é mantida
+    if (!isset($dados['id'], $dados['ativo'], $dados['funcao'], $dados['nome'], $dados['email'])
+        || trim($dados['nome']) === '' || trim($dados['email']) === '') {
         http_response_code(400);
 
         echo json_encode([
@@ -136,15 +139,29 @@ elseif ($metodo == "PUT")
     $funcao = $dados['funcao'];
     $nome = trim($dados['nome']);
     $email = trim($dados['email']);
-    $senha = password_hash($dados['senha'], PASSWORD_DEFAULT);
 
-    $sql = "UPDATE user 
-            SET ativo = ?, funcao = ?, nome = ?, email = ?, senha = ?
-            WHERE id = ?";
+    // Sem trim na senha: espaços contam como parte da senha
+    if (isset($dados['senha']) && $dados['senha'] !== '') {
+        $senha = password_hash($dados['senha'], PASSWORD_DEFAULT);
 
-    $stmt = $conn->prepare($sql);
+        $sql = "UPDATE user
+                SET ativo = ?, funcao = ?, nome = ?, email = ?, senha = ?
+                WHERE id = ?";
 
-    $stmt->bind_param("issssi", $ativo, $funcao, $nome, $email, $senha, $id);
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bind_param("issssi", $ativo, $funcao, $nome, $email, $senha, $id);
+    }
+
+    else {
+        $sql = "UPDATE user
+                SET ativo = ?, funcao = ?, nome = ?, email = ?
+                WHERE id = ?";
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bind_param("isssi", $ativo, $funcao, $nome, $email, $id);
+    }
 
     try {
         $stmt->execute();
