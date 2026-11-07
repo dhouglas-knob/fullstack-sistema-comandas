@@ -2,8 +2,6 @@ const recebido = window.location.search;
 const parametro = new URLSearchParams(recebido);
 const id = parametro.get('id');
 
-console.log(id);
-
 if (!id) {
     alert("Sem id Válido!");
     window.location.href = "usuarios.html";
@@ -58,6 +56,15 @@ form.addEventListener('submit', evento => {
 
     const mensagem = document.getElementById("mensagem");
     mensagem.classList.remove("mensagem-sucesso", "mensagem-erro");
+
+    const meuid = document.body.dataset.usuarioId;
+
+    if ((meuid === dados.id && dados.funcao === 'garcom') || (meuid === dados.id && dados.ativo === '0')) {
+        mensagem.textContent = "Você não pode se Desativar/Despromover.";
+        mensagem.classList.add("mensagem-erro");
+        return;
+    }
+
 
     fetch('../php/user.php', {
         method: 'PUT',
