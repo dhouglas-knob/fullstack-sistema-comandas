@@ -2,8 +2,6 @@
 
 session_start();
 
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-
 header("Content-Type: application/json");
 
 if (!isset($_SESSION['usuario_id'])) {
@@ -73,13 +71,9 @@ elseif ($metodo == "POST")
 {
     $dados = json_decode(file_get_contents("php://input"), true);
 
-    $ativo = $dados['ativo'];
-    $funcao = $dados['funcao'];
-    $nome = $dados['nome'];
-    $email = $dados['email'];
-    $senha = password_hash($dados['senha'], PASSWORD_DEFAULT);
-
-    if (!isset($dados['ativo'], $dados['funcao'], $dados['nome'], $dados['email'], $dados['senha'])) {
+    // Valida ANTES de ler os campos (senão o PHP solta warnings em HTML e quebra o JSON)
+    if (!isset($dados['ativo'], $dados['funcao'], $dados['nome'], $dados['email'], $dados['senha'])
+        || trim($dados['nome']) === '' || trim($dados['email']) === '' || $dados['senha'] === '') {
         http_response_code(400);
 
         echo json_encode([
@@ -89,6 +83,12 @@ elseif ($metodo == "POST")
         exit;
     }
 
+    $ativo = $dados['ativo'] ? 1 : 0;
+    $funcao = $dados['funcao'];
+    $nome = trim($dados['nome']);
+    $email = trim($dados['email']);
+    $senha = password_hash($dados['senha'], PASSWORD_DEFAULT);
+
     $sql = "INSERT INTO user (ativo, funcao, nome, email, senha)
             VALUES (?, ?, ?, ?, ?)";
 
@@ -96,7 +96,19 @@ elseif ($metodo == "POST")
 
     $stmt->bind_param("issss", $ativo, $funcao, $nome, $email, $senha);
 
-    $stmt->execute();
+    try {
+        $stmt->execute();
+    } catch (mysqli_sql_exception $e) {
+        // 1062 = chave duplicada (email já existe, coluna UNIQUE)
+        if ($e->getCode() == 1062) {
+            http_response_code(409);
+            echo json_encode(["erro" => "Este e-mail já está cadastrado."]);
+        } else {
+            http_response_code(500);
+            echo json_encode(["erro" => "Erro ao cadastrar usuário."]);
+        }
+        exit;
+    }
 
     http_response_code(201);
 
@@ -109,13 +121,10 @@ elseif ($metodo == "PUT")
 {
     $dados = json_decode(file_get_contents("php://input"), true);
 
-    $id = $dados['id'];
-    $ativo = $dados['ativo'];
-    $funcao = $dados['funcao'];
-    $nome = $dados['nome'];
-    $email = $dados['email'];
-
-    if (!isset($dados['ativo'], $dados['funcao'], $dados['nome'], $dados['email'])) {
+    // Valida ANTES de ler os campos (senão o PHP solta warnings em HTML e quebra o JSON)
+    // A senha não é obrigatória: se não vier, a senha atual é mantida
+    if (!isset($dados['id'], $dados['ativo'], $dados['funcao'], $dados['nome'], $dados['email'])
+        || trim($dados['nome']) === '' || trim($dados['email']) === '') {
         http_response_code(400);
 
         echo json_encode([
@@ -125,7 +134,14 @@ elseif ($metodo == "PUT")
         exit;
     }
 
-    if (isset($dados['senha']) && $dados['senha'] != '') {
+    $id = $dados['id'];
+    $ativo = $dados['ativo'] ? 1 : 0;
+    $funcao = $dados['funcao'];
+    $nome = trim($dados['nome']);
+    $email = trim($dados['email']);
+
+    // Sem trim na senha: espaços contam como parte da senha
+    if (isset($dados['senha']) && $dados['senha'] !== '') {
         $senha = password_hash($dados['senha'], PASSWORD_DEFAULT);
 
         $sql = "UPDATE user
@@ -147,7 +163,18 @@ elseif ($metodo == "PUT")
         $stmt->bind_param("isssi", $ativo, $funcao, $nome, $email, $id);
     }
 
-    $stmt->execute();
+    try {
+        $stmt->execute();
+    } catch (mysqli_sql_exception $e) {
+        if ($e->getCode() == 1062) {
+            http_response_code(409);
+            echo json_encode(["erro" => "Este e-mail já está cadastrado."]);
+        } else {
+            http_response_code(500);
+            echo json_encode(["erro" => "Erro ao atualizar usuário."]);
+        }
+        exit;
+    }
 
     http_response_code(200);
 
@@ -160,8 +187,6 @@ elseif ($metodo == "DELETE")
 {
     $dados = json_decode(file_get_contents("php://input"), true);
 
-    $id = $dados['id'];
-
     if (!isset($dados['id'])) {
         http_response_code(400);
 
@@ -171,6 +196,8 @@ elseif ($metodo == "DELETE")
 
         exit;
     }
+
+    $id = $dados['id'];
 
     $sql = "DELETE FROM user 
             WHERE id = ?";
