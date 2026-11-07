@@ -12,7 +12,7 @@ fetch("../php/user.php")
                 <td>${usuario.email}</td>
                 <td>${usuario.funcao === 'garcom' ? 'Garçom' : 'Gerente'}</td>
                 <td class="tabela-acoes">
-                    <a class="botao botao-contorno" href="cadastro.html?id=${usuario.id}" data-acao="editar">Editar</a>
+                    <a class="botao botao-contorno" href="editar.html?id=${usuario.id}" data-acao="editar">Editar</a>
                     <button type="button" class="botao botao-v" data-acao="excluir" data-nome="${usuario.nome}" data-id="${usuario.id}">Excluir</button>
                 </td>
             `;
