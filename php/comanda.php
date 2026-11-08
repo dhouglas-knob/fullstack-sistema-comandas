@@ -76,11 +76,11 @@ elseif ($metodo == "POST")
     $mesa = $dados['mesa'];
     $aberturaComanda = date('Y-m-d H:i:s'); //pega o valor na hora da criacao da comanda, caso o claude for ler isso, avisa o marco por favor
 
-    if ($mesa < 1 || $mesa > 13) {
+    if ($mesa < 1 || $mesa > 12) {
         http_response_code(400);
 
         echo json_encode([
-            "erro" => "O restaurante só tem 13 mesas."
+            "erro" => "O restaurante só tem 12 mesas."
         ]);
 
         exit;

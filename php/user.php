@@ -33,7 +33,7 @@ if ($metodo == "GET")
     $id = $_GET['id'] ?? null;
 
     if ($id) {
-        $sql = "SELECT * FROM user WHERE id = ?";
+        $sql = "SELECT id, ativo, funcao, nome, email FROM user WHERE id = ?";
 
         $stmt = $conn->prepare($sql);
 
@@ -53,7 +53,7 @@ if ($metodo == "GET")
     }
 
     else {
-        $sql = "SELECT * FROM user";
+        $sql = "SELECT id, ativo, funcao, nome, email FROM user";
 
         $resultado = $conn->query($sql);
 
