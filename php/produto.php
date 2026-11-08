@@ -12,21 +12,23 @@ if (!isset($_SESSION['usuario_id'])) {
     ]);
 
     exit;
-} else {
-    if ($_SESSION['usuario_funcao'] !== 'gerente') {
-        http_response_code(403);
+}
 
-        echo json_encode([
-            "erro" => "Você Não tem permissão para Acessar esta parte."
-        ]);
+$metodo = $_SERVER['REQUEST_METHOD'];
 
-        exit;
-    }
+// Qualquer usuário logado pode ver os produtos (GET);
+// só o gerente pode cadastrar, editar ou excluir.
+if ($metodo !== "GET" && $_SESSION['usuario_funcao'] !== 'gerente') {
+    http_response_code(403);
+
+    echo json_encode([
+        "erro" => "Você não tem permissão para alterar produtos."
+    ]);
+
+    exit;
 }
 
 require_once "conexao.php";
-
-$metodo = $_SERVER['REQUEST_METHOD'];
 
 if ($metodo == "GET")
 {
@@ -76,9 +78,9 @@ elseif ($metodo == "POST")
     $nome = $dados['nome'];
     $categoria = $dados['categoria'];
     $valor = $dados['valor'];
-    $obsPedido = $dados['obs_pedido'];
+    $obsPedido = $dados['descricao'];
 
-    if (!isset($dados['ativo'], $dados['nome'], $dados['categoria'], $dados['valor'], $dados['obs_pedido'])) {
+    if (!isset($dados['ativo'], $dados['nome'], $dados['categoria'], $dados['valor'], $dados['descricao'])) {
         http_response_code(400);
 
         echo json_encode([
@@ -88,7 +90,7 @@ elseif ($metodo == "POST")
         exit;
     }
 
-    $sql = "INSERT INTO produto (ativo, nome, categoria, valor, obs_pedido)
+    $sql = "INSERT INTO produto (ativo, nome, categoria, valor, descricao)
             VALUES (?, ?, ?, ?, ?)";
 
     $stmt = $conn->prepare($sql);
@@ -113,9 +115,9 @@ elseif ($metodo == "PUT")
     $nome = $dados['nome'];
     $categoria = $dados['categoria'];
     $valor = $dados['valor'];
-    $obsPedido = $dados['obs_pedido'];
+    $obsPedido = $dados['descricao'];
 
-    if (!isset($dados['ativo'], $dados['nome'], $dados['categoria'], $dados['valor'], $dados['obs_pedido'])) {
+    if (!isset($dados['ativo'], $dados['nome'], $dados['categoria'], $dados['valor'], $dados['descricao'])) {
         http_response_code(400);
 
         echo json_encode([
@@ -126,7 +128,7 @@ elseif ($metodo == "PUT")
     }
 
     $sql = "UPDATE produto
-            SET ativo = ?, nome = ?, categoria = ?, valor = ?, obs_pedido = ?
+            SET ativo = ?, nome = ?, categoria = ?, valor = ?, descricao = ?
             WHERE id = ?";
 
     $stmt = $conn->prepare($sql);

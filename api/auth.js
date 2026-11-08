@@ -8,6 +8,8 @@ fetch('../php/sessao.php')
             const msg = document.querySelector("#usuario-logado");
             msg.textContent = `${dados.nome} . ${dados.funcao === 'garcom' ? 'Garçom' : 'Gerente'}`;
             document.body.dataset.usuarioId = dados.id;
+            // Usado no CSS para mostrar os elementos .so-gerente só para o gerente
+            document.body.dataset.funcao = dados.funcao;
 
             if (dados.funcao === 'gerente') {
                 const Liberacao = document.querySelectorAll("[data-perfil='gerente']");

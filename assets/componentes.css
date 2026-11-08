@@ -83,7 +83,8 @@
 }
 
 .campo input,
-.campo select {
+.campo select,
+.campo textarea {
   width: 90%;
   min-height: var(--altura-controle);
   padding: var(--esp-2) var(--esp-3);
@@ -91,6 +92,12 @@
   border-radius: var(--raio-botao);
   background: var(--papel);
   margin-left: 5%;
+}
+
+/* O textarea não herda a fonte da página sozinho; e só cresce para baixo */
+.campo textarea {
+  font: inherit;
+  resize: vertical;
 }
 
 .campo-ajuda {
@@ -195,4 +202,9 @@
 .tabela-acoes {
   display: flex;
   gap: var(--esp-2);
+}
+/* Elementos só do gerente (ex.: Novo/Editar/Excluir produto).
+   Ficam escondidos até o auth.js confirmar que o usuário é gerente. */
+body:not([data-funcao="gerente"]) .so-gerente {
+    display: none;
 }
