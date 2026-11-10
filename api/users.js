@@ -1,9 +1,14 @@
-/* puxa todos os usuarios e cria uma linha na tabela pra cada um */
+const tabelaDesativados = document.querySelector("#lista-usuarios-desativados");
+const secaoDesativados = document.querySelector("#secao-desativados");
+
+/* puxa todos os usuarios e cria uma linha pra cada um
+   os ativos vao pra tabela de cima e os desativados pra de baixo */
 fetch("../php/user.php")
     .then(resposta => resposta.json())
     .then(dados => {
         const tabela = document.querySelector("#lista-usuarios");
         tabela.innerHTML = "";
+        tabelaDesativados.innerHTML = "";
         dados.forEach(usuario => {
             const linha = document.createElement("tr");
             linha.innerHTML = `
@@ -15,15 +20,20 @@ fetch("../php/user.php")
                     <button type="button" class="botao botao-v" data-acao="excluir" data-nome="${usuario.nome}" data-id="${usuario.id}">Excluir</button>
                 </td>
             `;
-            tabela.appendChild(linha);
+            if (usuario.ativo == 1) {
+                tabela.appendChild(linha);
+            } else {
+                tabelaDesativados.appendChild(linha);
+            }
         });
+
+        /* a tabela de desativados so aparece se tiver algum */
+        secaoDesativados.hidden = tabelaDesativados.children.length === 0;
     });
 
-const tbody = document.querySelector("#lista-usuarios");
-
-/* os botoes de excluir nascem dps pelo js, entao escuto o clique na tabela inteira
-   e vejo pelo data-acao se foi num botao de excluir */
-tbody.addEventListener("click", evento => {
+/* os botoes de excluir nascem dps pelo js, entao escuto o clique no painel inteiro
+   (pega as duas tabelas) e vejo pelo data-acao se foi num botao de excluir */
+document.querySelector(".painel").addEventListener("click", evento => {
     if (evento.target.dataset.acao !== "excluir") {
         return;
     }
@@ -56,6 +66,7 @@ tbody.addEventListener("click", evento => {
             if (resposta.ok) {
                 const linha = evento.target.closest('tr');
                 if (linha) linha.remove();
+                secaoDesativados.hidden = tabelaDesativados.children.length === 0;
 
                 mensagem.textContent = resultado.mensagem;
                 mensagem.classList.add("mensagem-sucesso");

@@ -47,8 +47,9 @@
 
             <p id="mensagem" class="mensagem" role="status" aria-live="polite"></p>
 
+            <h2 class="tabela-titulo">Ativos</h2>
             <table class="tabela">
-                <caption class="visualmente-oculto">Funcionários cadastrados no sistema</caption>
+                <caption class="visualmente-oculto">Funcionários ativos no sistema</caption>
                 <thead>
                     <tr>
                         <th scope="col">Nome</th>
@@ -61,6 +62,23 @@
             </table>
 
             <p id="lista-vazia" class="texto-suave" hidden>Nenhum funcionário cadastrado.</p>
+
+            <!-- os desativados ficam numa tabela separada, o js so mostra se tiver algum -->
+            <div id="secao-desativados" hidden>
+                <h2 class="tabela-titulo">Desativados</h2>
+                <table class="tabela tabela-inativa">
+                    <caption class="visualmente-oculto">Funcionários desativados</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Nome</th>
+                            <th scope="col">E-mail</th>
+                            <th scope="col">Cargo</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lista-usuarios-desativados"></tbody>
+                </table>
+            </div>
 
             <div class="formulario-acoes">
                 <a class="botao" href="cadastro.html">Novo funcionário</a>

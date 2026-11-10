@@ -208,6 +208,17 @@
   gap: var(--esp-2);
 }
 
+/* título em cima de cada tabela (Ativos / Desativados, Disponíveis / Indisponíveis) */
+.tabela-titulo {
+  margin: var(--esp-4) 0 var(--esp-2);
+  color: var(--destaque);
+}
+
+/* tabela dos desativados/indisponíveis: texto mais apagado pra diferenciar da de cima */
+.tabela-inativa td:not(.tabela-acoes) {
+  color: var(--texto-suave);
+}
+
 /* Dhouglas, tudo que tem a classe so-gerente fica escondido
    até o auth.js colocar data-funcao="gerente" no body */
 body:not([data-funcao="gerente"]) .so-gerente {

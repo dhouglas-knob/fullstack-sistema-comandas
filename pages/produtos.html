@@ -47,14 +47,14 @@
 
             <p id="mensagem" class="mensagem" role="status" aria-live="polite"></p>
 
+            <h2 class="tabela-titulo">Disponíveis</h2>
             <table class="tabela">
-                <caption class="visualmente-oculto">Produtos cadastrados no cardápio</caption>
+                <caption class="visualmente-oculto">Produtos disponíveis no cardápio</caption>
                 <thead>
                     <tr>
                         <th scope="col">Nome</th>
                         <th scope="col">Categoria</th>
                         <th scope="col">Valor</th>
-                        <th scope="col">Status</th>
                         <th scope="col" class="so-gerente">Ações</th>
                     </tr>
                 </thead>
@@ -62,6 +62,23 @@
             </table>
 
             <p id="lista-vazia" class="texto-suave" hidden>Nenhum produto cadastrado.</p>
+
+            <!-- os indisponiveis ficam numa tabela separada, o js so mostra se tiver algum -->
+            <div id="secao-indisponiveis" hidden>
+                <h2 class="tabela-titulo">Indisponíveis</h2>
+                <table class="tabela tabela-inativa">
+                    <caption class="visualmente-oculto">Produtos indisponíveis</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Categoria</th>
+                            <th scope="col">Valor</th>
+                            <th scope="col" class="so-gerente">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lista-produtos-indisponiveis"></tbody>
+                </table>
+            </div>
 
             <div class="formulario-acoes so-gerente">
                 <a class="botao" href="cadastro-produto.html">Novo produto</a>
