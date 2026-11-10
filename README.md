@@ -1,78 +1,95 @@
-# Sistema de Gerenciamento de Comandas
+# Alfetti - Sistema de Comandas
 
-Projeto universitário desenvolvido com HTML, CSS, PHP e MySQL, com o objetivo de facilitar o controle de comandas, produtos, usuários e vendas de um estabelecimento.
+Projeto universitário da PUC-PR (TDE 2). É um sistema web para a equipe de um restaurante controlar o atendimento das mesas: abrir a comanda, lançar os pedidos, acompanhar o total e fechar a conta.
 
-O sistema permite registrar comandas, adicionar produtos aos pedidos e calcular automaticamente o valor total com base nos produtos e suas respectivas quantidades. Além disso, possui autenticação de usuários e diferentes níveis de acesso, separando as funcionalidades disponíveis para gerentes e garçons.
+**Dupla:** Marco (front-end) e Dhouglas (back-end).
 
-## Funcionalidades
+## Tecnologias
 
-### Gerenciamento de comandas
-- Criação e registro de comandas.
-- Adição de produtos aos pedidos.
-- Cálculo automático do valor total da comanda.
-- Organização dos produtos e valores registrados.
+- Front-end: HTML, CSS e JavaScript puro
+- Back-end: PHP com `mysqli` e prepared statements
+- Banco: MySQL (XAMPP)
+- O front conversa com o PHP só por `fetch` com JSON
+- Login com sessão do PHP
 
-### Gerenciamento de produtos
-- Cadastro e consulta de produtos.
-- Registro de nome, categoria e valor.
-- Controle de disponibilidade dos produtos.
+## Como instalar
 
-### Controle de usuários
-- Cadastro e autenticação de usuários.
-- Gerenciamento de sessões utilizando PHP.
-- Controle de acesso de acordo com a função do usuário.
-- Cadastro de novos gerentes e garçons pelo gerente.
+1. Instale o [XAMPP](https://www.apachefriends.org/) e ligue o **Apache** e o **MySQL** no painel dele.
+2. Coloque a pasta do projeto dentro de `C:\xampp\htdocs` com o nome `restaurante`. Tem que ficar assim: `C:\xampp\htdocs\restaurante\index.html`.
+3. Abra `http://localhost/phpmyadmin`, clique em **Importar**, escolha o arquivo `schema.sql` que está na pasta do projeto e clique em **Importar** no fim da página. O script já cria o banco `restaurantedb`, as tabelas e as contas de teste.
+4. Confira o arquivo `php/conexao.php`. Ele vem com o usuário `root` e a senha vazia, que é o padrão do XAMPP. Se o seu MySQL tiver senha, troque na variável `$password`.
+5. Abra `http://localhost/restaurante/` no navegador.
 
-### Controle de vendas
+> Tem que abrir pelo `localhost`. Abrir o arquivo direto ou pelo Live Preview do VS Code não funciona, porque o PHP não roda.
 
-O sistema também possui funcionalidades voltadas ao acompanhamento financeiro do estabelecimento.
+## Contas de teste
 
-- Consulta ao registro de vendas.
-- Visualização dos valores movimentados.
-- Acompanhamento das saídas financeiras registradas.
-- Consulta das informações das comandas para auxiliar no controle do estabelecimento.
+| Perfil  | E-mail              | Senha      |
+| ------- | ------------------- | ---------- |
+| Gerente | gerente@alfetti.com | alfetti123 |
+| Garçom  | garcom@alfetti.com  | alfetti123 |
 
-### Níveis de acesso
+Não existe cadastro público. Só o gerente cadastra funcionário (menu **Usuários**), e todo funcionário novo entra como garçom.
 
-O sistema possui dois tipos de usuários:
+O banco vem sem produtos. Entre como gerente e cadastre alguns em **Produtos > Novo produto** antes de lançar itens.
 
-**Gerente**
-- Acesso às funcionalidades de gerenciamento.
-- Cadastro de novos usuários, podendo definir se serão gerentes ou garçons.
-- Gerenciamento de produtos.
-- Acesso ao registro de vendas.
-- Consulta dos valores de saída e movimentações registradas.
-- Acesso ao gerenciamento de comandas.
+## Como usar
 
-**Garçom**
-- Acesso ao registro de comandas.
-- Adição de produtos aos pedidos.
-- Consulta das informações necessárias para realizar os pedidos.
+1. Entre com e-mail e senha.
+2. Na tela de **Mesas** aparecem as 12 mesas. Verde é livre e cinza é ocupada.
+3. Clique numa mesa livre para abrir uma comanda, ou numa ocupada para ver a comanda dela.
+4. Na comanda, a esquerda mostra os itens e o total. Na direita dá para lançar item, fechar a conta e excluir a comanda. Tirar item só aparece para o gerente.
+5. Depois de fechada, a comanda vai para o **Histórico** e não muda mais.
 
-O controle de permissões impede que garçons acessem funcionalidades administrativas, mantendo o gerenciamento dessas operações restrito aos gerentes.
+### O que cada perfil faz
 
-## Tecnologias utilizadas
+- **Garçom:** abre comanda, lança item, fecha a conta, exclui comanda vazia, vê produtos e histórico.
+- **Gerente:** tudo do garçom, e também tira item da comanda, cadastra/edita/exclui produtos e usuários.
 
-- **HTML5:** estrutura das páginas.
-- **CSS3:** estilização e organização visual.
-- **PHP:** processamento das requisições e regras de negócio.
-- **MySQL:** armazenamento e gerenciamento dos dados.
+## Regras do sistema
 
-## Conceitos aplicados
+- Cada mesa só pode ter uma comanda aberta por vez.
+- Só dá para lançar ou tirar item em comanda aberta.
+- Produto indisponível não aparece para lançar.
+- Produto que já foi lançado em alguma comanda não pode ser excluído, só fica indisponível.
+- Usuário que tem comanda não pode ser excluído, só desativado. O gerente não pode excluir a própria conta.
+- Só dá para excluir comanda aberta e sem itens.
+- As permissões são conferidas no front e de novo no PHP.
 
-Durante o desenvolvimento, foram utilizados conceitos importantes para o desenvolvimento Web:
+## Banco de dados
 
-- Operações CRUD.
-- Integração entre PHP e MySQL.
-- Autenticação de usuários.
-- Gerenciamento de sessões.
-- Controle de acesso por função (gerente e garçom).
-- Manipulação de requisições HTTP.
-- Relacionamento entre tabelas no banco de dados.
-- Cálculos e gerenciamento de valores das comandas.
+São 4 tabelas (o script está em `schema.sql`):
 
-## Objetivo
+- `user`: funcionários (garçom ou gerente)
+- `produto`: cardápio
+- `comanda`: uma por atendimento de mesa. Tem chave estrangeira para `user`
+- `produto_comanda`: itens da comanda. Tem chave estrangeira para `comanda` e para `produto`
 
-O projeto foi desenvolvido como parte da graduação em Ciência da Computação, com o propósito de colocar em prática conhecimentos de desenvolvimento Full Stack, trabalhando tanto na interface quanto na lógica do servidor e na integração com o banco de dados.
+Não existe tabela de mesas: são 12 mesas fixas e a mesa é só um número na comanda.
 
-Mais do que desenvolver um sistema de cadastro, a proposta foi criar uma aplicação que simulasse algumas necessidades reais de gerenciamento de um estabelecimento.
+## Pastas
+
+```
+restaurante/
+├── index.html          tela de login
+├── schema.sql          script do banco
+├── pages/              as telas de dentro do sistema (HTML)
+├── api/                o JavaScript de cada tela (faz os fetch)
+├── assets/             CSS, fontes e imagens
+└── php/                a API em PHP (devolve JSON)
+```
+
+| Tela                         | JavaScript                              | PHP que ela chama                               |
+| ---------------------------- | --------------------------------------- | ----------------------------------------------- |
+| `index.html`                 | `api/login.js`                          | `login.php`                                     |
+| `pages/mesas.html`           | `api/mesas.js`                          | `comanda.php`                                   |
+| `pages/comanda-detalhe.html` | `api/comanda.js`                        | `comanda.php`, `produto_comanda.php`, `produto.php` |
+| `pages/historico.html`       | `api/historico.js`                      | `comanda.php`                                   |
+| `pages/produtos.html`        | `api/produtos.js`                       | `produto.php`                                   |
+| `pages/cadastro-produto.html` e `editar-produto.html` | `api/cadastro-produto.js` e `editar-produto.js` | `produto.php`                |
+| `pages/usuarios.html`        | `api/users.js`                          | `user.php`                                      |
+| `pages/cadastro.html` e `editar.html` | `api/cadastro.js` e `editar.js` | `user.php`                                      |
+
+Toda página de dentro também carrega o `api/auth.js`, que confere a sessão no `sessao.php`, mostra quem está logado e faz o logout.
+
+O roteiro de testes está em [ROTEIRO-DE-TESTES.md](ROTEIRO-DE-TESTES.md).

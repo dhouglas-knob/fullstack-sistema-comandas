@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funcionário · Alfetti</title>
+    <link rel="stylesheet" href="../assets/base.css">
+    <link rel="stylesheet" href="../assets/componentes.css">
+    <link rel="stylesheet" href="../assets/paginas.css">
+    <script src="../api/editar.js" defer></script>
+    <script src="../api/auth.js" defer></script>
+</head>
+
+<body class="pagina-interna" data-acesso="gerente">
+
+<header class="barra-topo">
+    <a class="barra-topo-nome" href="mesas.html">Alfetti</a>
+
+    <nav class="barra-topo-menu" aria-label="Menu principal">
+        <span id="usuario-logado"></span>
+        <a class="barra-topo-link" href="mesas.html">
+            <button type="button" id="botao-mesas" class="botao">Mesas</button>
+        </a>
+        <a class="barra-topo-link" href="historico.html">
+            <button type="button" id="botao-historico" class="botao">Histórico</button>
+        </a>
+        <a class="barra-topo-link" href="produtos.html">
+            <button type="button" id="botao-produtos" class="botao">Produtos</button>
+        </a>
+        <a class="barra-topo-link" href="usuarios.html" data-perfil="gerente" aria-current="page" hidden>
+            <button type="button" id="botao-usuarios" class="botao">Usuários</button>
+        </a>
+    </nav>
+
+    <div class="barra-topo-usuario">
+        <button type="button" id="botao-sair" class="botao">Sair</button>
+    </div>
+</header>
+
+<main class="conteudo">
+
+    <section class="painel" aria-labelledby="titulo-formulario">
+        <div class="conteudo-topo">
+            <h1 id="titulo-formulario">Editar Funcionário</h1>
+        </div>
+
+        <p id="mensagem" class="mensagem" role="status" aria-live="polite"></p>
+
+        <!-- os campos começam vazio, o editar.js puxa o usuario do ?id= e preenche -->
+        <form id="form-editar">
+
+            <div class="campo">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" required minlength="3" maxlength="100" autocomplete="name">
+            </div>
+
+            <div class="campo">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" required maxlength="150" autocomplete="off">
+            </div>
+
+            <div class="campo" id="campo-perfil">
+                <label for="perfil">Cargo</label>
+                <select id="perfil" name="perfil">
+                    <option value="garcom" selected>Garçom</option>
+                    <option value="gerente">Gerente</option>
+                </select>
+            </div>
+
+            <div class="campo" id="campo-ativo">
+                <label for="ativo">Status</label>
+                    <select id="ativo" name="ativo">
+                        <option value="1" selected>Ativado</option>
+                        <option value="0">Desativado</option>
+                    </select>
+            </div>
+
+            <div class="campo">
+                <label for="senha">Senha</label>
+                <!-- sem required aq: deixou em branco a senha fica a msm -->
+                <input type="password" id="senha" name="senha" minlength="6" autocomplete="new-password"
+                       aria-describedby="ajuda-senha">
+                <span id="ajuda-senha" class="campo-ajuda">Mínimo de 6 caracteres. (Deixe em Branco para manter a senha atual)</span>
+            </div>
+
+            <div class="formulario-acoes">
+                <button type="submit" id="botao-salvar" class="botao">Salvar</button>
+                <a class="botao botao-contorno" href="usuarios.html">Cancelar</a>
+                <a class="botao" href="usuarios.html">Voltar para usuários</a>
+            </div>
+        </form>
+    </section>
+
+</main>
+</body>
+
+</html>

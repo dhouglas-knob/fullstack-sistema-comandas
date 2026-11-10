@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar produto · Alfetti</title>
+    <link rel="stylesheet" href="../assets/base.css">
+    <link rel="stylesheet" href="../assets/componentes.css">
+    <link rel="stylesheet" href="../assets/paginas.css">
+    <script src="../api/editar-produto.js" defer></script>
+    <script src="../api/auth.js" defer></script>
+</head>
+
+<body class="pagina-interna" data-acesso="gerente">
+
+    <header class="barra-topo">
+        <a class="barra-topo-nome" href="mesas.html">Alfetti</a>
+
+        <nav class="barra-topo-menu" aria-label="Menu principal">
+            <span id="usuario-logado"></span>
+            <a class="barra-topo-link" href="mesas.html">
+                <button type="button" id="botao-mesas" class="botao">Mesas</button>
+            </a>
+            <a class="barra-topo-link" href="historico.html">
+                <button type="button" id="botao-historico" class="botao">Histórico</button>
+            </a>
+            <a class="barra-topo-link" href="produtos.html" aria-current="page">
+                <button type="button" id="botao-produtos" class="botao">Produtos</button>
+            </a>
+            <a class="barra-topo-link" href="usuarios.html" data-perfil="gerente" hidden>
+                <button type="button" id="botao-usuarios" class="botao">Usuários</button>
+            </a>
+        </nav>
+
+        <div class="barra-topo-usuario">
+            <button type="button" id="botao-sair" class="botao">Sair</button>
+        </div>
+    </header>
+
+    <main class="conteudo">
+
+        <section class="painel" aria-labelledby="titulo-formulario">
+            <div class="conteudo-topo">
+                <h1 id="titulo-formulario">Editar produto</h1>
+            </div>
+
+            <!-- o js joga aq se deu bom ou se deu ruim -->
+            <p id="mensagem" class="mensagem" role="status" aria-live="polite"></p>
+
+            <!-- n tem action nem method pq quem manda é o editar-produto.js no fetch -->
+            <form id="form-editar-produto">
+                <div class="campo">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" name="nome" required minlength="2" maxlength="100" autocomplete="off">
+                </div>
+
+                <div class="campo">
+                    <label for="categoria">Categoria</label>
+                    <select id="categoria" name="categoria" required>
+                        <option value="" selected disabled>Selecione...</option>
+                        <option value="Entrada">Entrada</option>
+                        <option value="Prato principal">Prato principal</option>
+                        <option value="Sobremesa">Sobremesa</option>
+                        <option value="Bebida">Bebida</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="descricao">Descrição</label>
+                    <textarea id="descricao" name="descricao" rows="3" maxlength="255"
+                              aria-describedby="ajuda-descricao"></textarea>
+                    <span id="ajuda-descricao" class="campo-ajuda">Opcional. Ex.: ingredientes ou tamanho da porção.</span>
+                </div>
+
+                <div class="campo">
+                    <label for="valor">Valor (R$)</label>
+                    <input type="number" id="valor" name="valor" required min="0.01" step="0.01"
+                           aria-describedby="ajuda-valor">
+                    <span id="ajuda-valor" class="campo-ajuda">Mudar o valor não altera comandas concluídas.</span>
+                </div>
+
+                <div class="campo">
+                    <label for="ativo">Status</label>
+                    <!-- produto indisponivel n aparece pra lançar na comanda -->
+                    <select id="ativo" name="ativo">
+                        <option value="1" selected>Disponível</option>
+                        <option value="0">Indisponível</option>
+                    </select>
+                </div>
+
+                <div class="formulario-acoes">
+                    <button type="submit" id="botao-salvar" class="botao">Salvar</button>
+                    <a class="botao botao-contorno" href="produtos.html">Cancelar</a>
+                    <a class="botao" href="produtos.html">Voltar para produtos</a>
+                </div>
+            </form>
+        </section>
+
+    </main>
+</body>
+
+</html>

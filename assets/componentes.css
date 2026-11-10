@@ -1,18 +1,10 @@
-/* ==========================================================
-   componentes.css
-   Peças reutilizáveis: botão, campo de formulário, mensagem
-   e painel. Usa só as variáveis definidas no base.css.
-   Para mudar o visual de uma peça em todas as telas,
-   altere aqui.
-   ========================================================== */
+/* Componentes que se repetem */
 
 
-/* ---------- Botão ----------
-   Uso: <button class="botao">Entrar</button>
-   Variações (somam à classe .botao):
-     botao--contorno  só a borda, para ações secundárias
-     botao--perigo    para ações que apagam
-     botao--bloco     ocupa a largura toda
+/* Botão 
+   dá pra somar com a classe .botao:
+     botao-contorno  fundo claro com borda, inverte quando passa o mouse
+     botao-v         botão vermelho (excluir)
 */
 
 .botao {
@@ -47,38 +39,34 @@
   cursor: not-allowed;
 }
 
-.botao--contorno {
-  background: transparent;
-  border-color: var(--texto);
-  color: var(--texto);
+.botao-contorno {
+  background: var(--fundo);
+  border-color: var(--destaque);
+  color: var(--destaque);
 }
 
-.botao--contorno:hover {
-  background: var(--fundo-selecionado);
-  filter: none;
+.botao-contorno:hover {
+  background: var(--destaque);
+  border-color: var(--destaque);
+  color: var(--fundo);
 }
 
-.botao--perigo {
+/* Botão vermelho */
+.botao-v {
   background: var(--erro);
   border-color: var(--erro);
   color: #FFFFFF;
 }
 
-.botao--bloco {
-  width: 100%;
+.botao-v:hover {
+  background: #9E2F18;
+  border-color: #9E2F18;
 }
 
 
-/* ---------- Campo de formulário ----------
-   Uso:
-   <div class="campo">
-     <label for="email">E-mail</label>
-     <input type="email" id="email" name="email">
-   </div>
-   Funciona também com <select> e <textarea>.
-   Extras:
-     campo__ajuda  texto de ajuda embaixo do campo
-     campo--erro   marca o campo com problema (borda e texto em vermelho)
+/* Campo de formulário
+
+     campo-ajuda  texto de ajuda embaixo do campo
 */
 
 .campo {
@@ -89,7 +77,7 @@
 }
 
 .campo label {
-margin-left: 5%;
+  margin-left: 5%;
   font-size: 0.9375rem;
   font-weight: 500;
 }
@@ -106,32 +94,21 @@ margin-left: 5%;
   margin-left: 5%;
 }
 
+/* o textarea não pega a fonte da página sozinho, e só deixo ele crescer pra baixo */
 .campo textarea {
-  min-height: 96px;
+  font: inherit;
   resize: vertical;
 }
 
-.campo__ajuda {
+.campo-ajuda {
   font-size: 0.875rem;
   color: var(--texto-suave);
 }
 
-.campo--erro input,
-.campo--erro select,
-.campo--erro textarea {
-  border-color: var(--erro);
-}
 
-.campo--erro .campo__ajuda {
-  color: var(--erro);
-}
-
-
-/* ---------- Mensagem ----------
-   Uso: <p id="mensagem" class="mensagem" role="alert"></p>
-   O JavaScript escreve o texto e soma uma das variações:
-     mensagem--erro, mensagem--sucesso ou mensagem--aviso
-   A altura mínima evita que a tela "pule" quando o texto aparece.
+/* Mensagem
+    o JS escreve o texto e coloca mensagem-erro ou mensagem-sucesso
+    a altura mínima é pra tela não pular quando o texto aparece
 */
 
 .mensagem {
@@ -140,27 +117,110 @@ margin-left: 5%;
   font-weight: 500;
 }
 
-.mensagem--erro {
+.mensagem-erro {
   color: var(--erro);
 }
 
-.mensagem--sucesso {
+.mensagem-sucesso {
   color: var(--sucesso);
 }
 
-.mensagem--aviso {
-  color: var(--ambar-texto);
-}
 
+/* Painel
 
-/* ---------- Painel ----------
-   Uso: <section class="painel"> ... </section>
-   Caixa branca com borda fina, para agrupar conteúdo.
+é uma caixona para guardar as coisas
+
 */
 
 .painel {
   background: var(--papel);
-  border: 1px solid var(--linha);
+  border: 3px solid var(--destaque);
   border-radius: var(--raio-painel);
   padding: var(--esp-5);
+  max-width: 55%;
+  margin: 50px auto;
+}
+
+/* o histórico tem mais coluna na tabela, então o painel dele é mais largo */
+.painel-largo {
+  max-width: 85%;
+}
+
+/* Barra Superior */
+
+.barra-topo {
+  display: flex;
+  align-items: center;
+  padding: var(--esp-5) var(--esp-6);
+  background: var(--fundo-selecionado);
+  border-bottom: 2px solid var(--destaque);
+}
+
+.barra-topo-nome {
+  font-family: var(--fonte-titulo);
+  font-size: 2rem;
+  color: var(--destaque);
+}
+
+.barra-topo-menu {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#usuario-logado {
+  font-family: var(--fonte-talao);
+}
+
+.barra-topo-link {
+  display: inline-flex;
+  text-decoration: none;
+}
+
+/* Tabela */
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--esp-4);
+  background: var(--papel);
+  border-bottom: 2px solid var(--destaque);
+  border-left: 2px solid var(--destaque);
+}
+
+.tabela th,
+.tabela td {
+  padding: var(--esp-3);
+  text-align: left;
+  border-bottom: 1px solid var(--fundo-selecionado);
+  border-right: 2px solid var(--destaque);
+}
+
+.tabela th {
+  background: var(--destaque);
+  color: var(--sobre-destaque);
+  font-weight: 500;
+}
+
+.tabela-acoes {
+  display: flex;
+  gap: var(--esp-2);
+}
+
+/* título em cima de cada tabela (Ativos / Desativados, Disponíveis / Indisponíveis) */
+.tabela-titulo {
+  margin: var(--esp-4) 0 var(--esp-2);
+  color: var(--destaque);
+}
+
+/* tabela dos desativados/indisponíveis: texto mais apagado pra diferenciar da de cima */
+.tabela-inativa td:not(.tabela-acoes) {
+  color: var(--texto-suave);
+}
+
+/* Dhouglas, tudo que tem a classe so-gerente fica escondido
+   até o auth.js colocar data-funcao="gerente" no body */
+body:not([data-funcao="gerente"]) .so-gerente {
+    display: none;
 }

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesas · Alfetti</title>
+    <link rel="stylesheet" href="../assets/base.css">
+    <link rel="stylesheet" href="../assets/componentes.css">
+    <link rel="stylesheet" href="../assets/paginas.css">
+    <script src="../api/auth.js" defer></script>
+    <script src="../api/mesas.js" defer></script>
+</head>
+
+<!-- aq n tem data-acesso pq garçom e gerente entram nessa tela -->
+<body class="pagina-interna">
+
+    <header class="barra-topo">
+        <a class="barra-topo-nome" href="mesas.html">Alfetti</a>
+
+        <nav class="barra-topo-menu" aria-label="Menu principal">
+            <span id="usuario-logado"></span>
+            <a class="barra-topo-link" href="mesas.html" aria-current="page">
+                <button type="button" id="botao-mesas" class="botao">Mesas</button>
+            </a>
+            <a class="barra-topo-link" href="historico.html">
+                <button type="button" id="botao-historico" class="botao">Histórico</button>
+            </a>
+            <a class="barra-topo-link" href="produtos.html">
+                <button type="button" id="botao-produtos" class="botao">Produtos</button>
+            </a>
+            <a class="barra-topo-link" href="usuarios.html" data-perfil="gerente" hidden>
+                <button type="button" id="botao-usuarios" class="botao">Usuários</button>
+            </a>
+        </nav>
+
+        <div class="barra-topo-usuario">
+            <button type="button" id="botao-sair" class="botao">Sair</button>
+        </div>
+    </header>
+
+    <main class="conteudo conteudo-mesas">
+
+        <!-- lado esquerdo: legenda, resumo e as comandas abertas -->
+        <aside class="lateral-mesas">
+
+            <h1 id="titulo-mesas">Mesas</h1>
+
+            <!-- legenda das cores das mesas -->
+            <ul class="legenda">
+                <li class="legenda-item">
+                    <span class="legenda-cor legenda-cor-livre" aria-hidden="true"></span>
+                    Livre
+                </li>
+                <li class="legenda-item">
+                    <span class="legenda-cor legenda-cor-ocupada" aria-hidden="true"></span>
+                    Ocupada
+                </li>
+            </ul>
+
+            <!-- esses numeros começam zerado, quem preenche é o mesas.js -->
+            <dl class="resumo-mesas">
+                <div class="resumo-linha">
+                    <dt>Livres</dt>
+                    <dd id="total-livres">0</dd>
+                </div>
+                <div class="resumo-linha">
+                    <dt>Ocupadas</dt>
+                    <dd id="total-ocupadas">0</dd>
+                </div>
+                <div class="resumo-linha">
+                    <dt>Em aberto</dt>
+                    <dd id="total-aberto">R$ 0,00</dd>
+                </div>
+            </dl>
+
+            <!-- o mesas.js joga um <li> aq pra cada comanda aberta -->
+            <h2 class="lateral-subtitulo">Abertas agora</h2>
+            <ul id="lista-abertas" class="lista-abertas"></ul>
+            <p id="nenhuma-aberta" class="texto-suave">Nenhuma comanda aberta.</p>
+
+        </aside>
+
+        <!-- lado direito: a grade com as 12 mesas -->
+        <section class="area-mesas">
+
+            <p id="mensagem" class="mensagem" role="status" aria-live="polite"></p>
+
+            <!-- dhouglin, a grade fica vazia no html msm, n é bug
+                 quem desenha as 12 mesas é o mesas.js, olhando as comandas abertas -->
+            <div id="grade-mesas" class="grade-mesas"></div>
+        </section>
+
+    </main>
+</body>
+
+</html>

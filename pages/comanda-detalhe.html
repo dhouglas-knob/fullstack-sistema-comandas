@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comanda · Alfetti</title>
+    <link rel="stylesheet" href="../assets/base.css">
+    <link rel="stylesheet" href="../assets/componentes.css">
+    <link rel="stylesheet" href="../assets/paginas.css">
+    <script src="../api/comanda.js" defer></script>
+    <script src="../api/auth.js" defer></script>
+</head>
+
+<!-- garçom e gerente entram aq, a comanda q abre é a do ?id= da url -->
+<body class="pagina-interna">
+
+    <header class="barra-topo">
+        <a class="barra-topo-nome" href="mesas.html">Alfetti</a>
+
+        <nav class="barra-topo-menu" aria-label="Menu principal">
+            <span id="usuario-logado"></span>
+            <a class="barra-topo-link" href="mesas.html" aria-current="page">
+                <button type="button" id="botao-mesas" class="botao">Mesas</button>
+            </a>
+            <a class="barra-topo-link" href="historico.html">
+                <button type="button" id="botao-historico" class="botao">Histórico</button>
+            </a>
+            <a class="barra-topo-link" href="produtos.html">
+                <button type="button" id="botao-produtos" class="botao">Produtos</button>
+            </a>
+            <a class="barra-topo-link" href="usuarios.html" data-perfil="gerente" hidden>
+                <button type="button" id="botao-usuarios" class="botao">Usuários</button>
+            </a>
+        </nav>
+
+        <div class="barra-topo-usuario">
+            <button type="button" id="botao-sair" class="botao">Sair</button>
+        </div>
+    </header>
+
+    <main class="conteudo conteudo-comanda">
+
+        <!-- lado esquerdo: a comanda em si, do jeito q ta agr (o "talão") -->
+        <section class="talao-comanda" aria-labelledby="titulo-comanda">
+
+            <h1 id="titulo-comanda">Mesa</h1>
+
+            <!-- dados da comanda, o comanda.js preenche tudo sozinho -->
+            <dl class="resumo-mesas">
+                <div class="resumo-linha">
+                    <dt id="rotulo-usuario">Aberta por</dt>
+                    <dd id="comanda-usuario">-</dd>
+                </div>
+                <div class="resumo-linha">
+                    <dt>Abertura</dt>
+                    <dd id="comanda-abertura">-</dd>
+                </div>
+                <div class="resumo-linha">
+                    <dt>Status</dt>
+                    <dd id="comanda-status">-</dd>
+                </div>
+                <!-- essas duas so aparecem dps q a comanda fechou -->
+                <div class="resumo-linha" id="linha-fechamento" hidden>
+                    <dt>Fechamento</dt>
+                    <dd id="comanda-fechamento">-</dd>
+                </div>
+                <div class="resumo-linha" id="linha-pagamento" hidden>
+                    <dt>Pagamento</dt>
+                    <dd id="comanda-pagamento">-</dd>
+                </div>
+            </dl>
+
+            <!-- itens lançados, uma linha pra cada -->
+            <table class="talao-itens">
+                <caption class="visualmente-oculto">Itens lançados na comanda</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Item</th>
+                        <th scope="col">Qtd</th>
+                        <th scope="col">Valor</th>
+                        <th scope="col">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody id="lista-itens"></tbody>
+            </table>
+
+            <p id="sem-itens" class="texto-suave">Nenhum item lançado ainda.</p>
+
+            <div class="talao-total">
+                <span>Total</span>
+                <span id="comanda-total">R$ 0,00</span>
+            </div>
+        </section>
+
+        <!-- lado direito: oq da pra fazer com a comanda -->
+        <aside class="acoes-comanda">
+
+            <p id="mensagem" class="mensagem" role="status" aria-live="polite"></p>
+
+            <!-- tudo aq dentro some qnd a comanda fecha, pq fechou its over -->
+            <div id="acoes-aberta">
+
+                <!-- lançar item: escolhe o produto e quantos -->
+                <form id="form-item">
+                    <h2>Lançar item</h2>
+
+                    <div class="campo">
+                        <label for="produto">Produto</label>
+                        <!-- o comanda.js joga aq so os produtos disponiveis -->
+                        <select id="produto" name="produto" required>
+                            <option value="" selected disabled>Selecione...</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="quantidade">Quantidade</label>
+                        <input type="number" id="quantidade" name="quantidade" required min="1" step="1" value="1">
+                    </div>
+
+                    <button type="submit" class="botao">Lançar</button>
+                </form>
+
+                <!-- tirar item: so o gerente ve (so-gerente) e o php confere d novo -->
+                <form id="form-tirar" class="so-gerente">
+                    <h2>Tirar item</h2>
+
+                    <div class="campo">
+                        <label for="item">Item da comanda</label>
+                        <select id="item" name="item" required>
+                            <option value="" selected disabled>Selecione...</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="botao botao-v">Tirar</button>
+                </form>
+
+                <!-- fechar a conta: tem q falar como o cliente pagou -->
+                <form id="form-fechar">
+                    <h2>Fechar conta</h2>
+
+                    <div class="campo">
+                        <label for="pagamento">Forma de pagamento</label>
+                        <select id="pagamento" name="pagamento" required>
+                            <option value="" selected disabled>Selecione...</option>
+                            <option value="Dinheiro">Dinheiro</option>
+                            <option value="Pix">Pix</option>
+                            <option value="Cartão de débito">Cartão de débito</option>
+                            <option value="Cartão de crédito">Cartão de crédito</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="botao">Fechar conta</button>
+                </form>
+
+                <!-- excluir é pra qnd abriu a mesa errada, so funciona se tiver vazia -->
+                <button type="button" id="botao-excluir" class="botao botao-v">Excluir comanda</button>
+            </div>
+
+            <a class="botao botao-contorno" href="mesas.html">Voltar para mesas</a>
+        </aside>
+
+    </main>
+</body>
+
+</html>

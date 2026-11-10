@@ -1,15 +1,8 @@
-/* ==========================================================
-   base.css
-   Variáveis de cor e fonte, reset e estilo geral da página.
-   Só existe o tema claro.
-   ========================================================== */
-
-
-/* ---------- 1. Fontes (arquivos em assets/fonts/) ---------- */
+/* Então neguin se liga aqui vou pegar as fontes */
 
 @font-face {
   font-family: 'Lora';
-  src: url('../fonts/lora-500.woff2') format('woff2');
+  src: url('fonts/lora-500.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -17,7 +10,7 @@
 
 @font-face {
   font-family: 'Space Mono';
-  src: url('../fonts/space-mono-400.woff2') format('woff2');
+  src: url('fonts/space-mono-400.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -25,7 +18,7 @@
 
 @font-face {
   font-family: 'DM Sans';
-  src: url('../fonts/dm-sans-400.woff2') format('woff2');
+  src: url('fonts/dm-sans-400.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -33,40 +26,41 @@
 
 @font-face {
   font-family: 'DM Sans';
-  src: url('../fonts/dm-sans-500.woff2') format('woff2');
+  src: url('fonts/dm-sans-500.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
 
-/* ---------- 2. Variáveis ---------- */
+/* Dhouglas aqui são meio que declaração de variáveis */
 
 :root {
   /* Cores */
   --fundo: #F4F4F2;
   --fundo-selecionado: #E8E8E5;
-  --linha: #D8D8D4;
   --papel: #FFFFFF;
   --texto: #1F2933;
   --texto-suave: #5B6670;
-  --destaque: #1F5A3E;
+  --destaque: #123524;
   --sobre-destaque: #FFFFFF;
   --sucesso: #2F855A;
-  --ambar: #F0B429;
-  --ambar-borda: #8A5200;
-  --ambar-texto: #6A4103;
   --erro: #C23B1F;
+  --mesa-livre: #2E7D52;
+  --mesa-livre-hover: #276749;
+  --mesa-ocupada: #C2C2C2;
+  --mesa-ocupada-borda: #8F8F8F;
+  --linha: #D9D9D5;
 
-  /* Fontes (as reservas entram se o arquivo não carregar) */
+  /* Fontes (as de depois da vírgula são reserva, caso o arquivo não carregue) */
   --fonte-titulo: 'Lora', Georgia, serif;
   --fonte-talao: 'Space Mono', ui-monospace, Menlo, Consolas, monospace;
   --fonte-texto: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   /* Cantos */
-  --raio-talao: 2px;
   --raio-botao: 3px;
   --raio-painel: 4px;
+  --raio-talao: 2px;
 
   /* Espaçamentos */
   --esp-1: 4px;
@@ -76,12 +70,12 @@
   --esp-5: 24px;
   --esp-6: 32px;
 
-  /* Altura mínima de botões e campos (toque confortável) */
+  /* altura mínima dos botões e dos campos pra ficar bom de clicar */
   --altura-controle: 44px;
 }
 
 
-/* ---------- 3. Reset básico ---------- */
+/* aqui tira as margens e os padrões estranhos do navegador */
 
 *,
 *::before,
@@ -108,7 +102,7 @@ svg {
   max-width: 100%;
 }
 
-/* Formulários herdam a fonte da página (por padrão o navegador usa outra) */
+/* botão e input não pegam a fonte da página sozinhos, tem que mandar herdar */
 button,
 input,
 select,
@@ -121,13 +115,13 @@ button {
   cursor: pointer;
 }
 
-/* Quem tem o atributo hidden fica realmente escondido */
+/* garante que quem tem hidden some mesmo, o JS usa bastante isso */
 [hidden] {
   display: none !important;
 }
 
 
-/* ---------- 4. Página ---------- */
+/* Página */
 
 body {
   min-height: 100vh;
@@ -140,7 +134,7 @@ body {
 }
 
 
-/* ---------- 5. Títulos e texto ---------- */
+/* Títulos e texto */
 
 h1,
 h2,
@@ -166,13 +160,13 @@ a:hover {
   color: var(--texto-suave);
 }
 
-/* Valores e horários no estilo do talão */
+/* valores e horários com a fonte de talão (a Space Mono) */
 .talao {
   font-family: var(--fonte-talao);
 }
 
 
-/* ---------- 6. Foco visível (para quem usa teclado) ---------- */
+/* contorno de quando navega pelo teclado */
 
 :focus-visible {
   outline: 2px solid var(--destaque);
@@ -180,9 +174,7 @@ a:hover {
 }
 
 
-/* ---------- 7. Utilitário ---------- */
-
-/* Esconde da tela, mas mantém para leitores de tela */
+/* some da tela mas o leitor de tela ainda lê (uso no caption das tabelas) */
 .visualmente-oculto {
   position: absolute;
   width: 1px;

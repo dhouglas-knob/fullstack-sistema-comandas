@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="assets/base.css">
+    <link rel="stylesheet" href="assets/componentes.css">
+    <link rel="stylesheet" href="assets/paginas.css?v=2">
+    <script src="api/login.js" defer></script>
+</head>
+<body class="pagina-central">
+<header class="header">
+    <span class="header-nome">Alfetti</span>
+</header>
+<section class="boas-vindas">
+    <h2 class="boas-vindas-titulo">Bem-vindo de volta!</h2>
+    <p class="boas-vindas-texto">Entre com seu email e senha para acessar o sistema de comandas.</p>
+</section>
+<main class="cartao-central">
+    <div id="login">
+        <div id="login-header">
+            <h1>Login</h1>
+        </div>
+        <form id="form-login">
+            <div class="campo">
+                <label for="input_email">Email</label>
+                <input type="email" name="email" id="input_email" placeholder="Email" required>
+            </div>
+            <div class="campo">
+                <label for="pass">Senha</label>
+                <input type="password" name="pass" id="pass" placeholder="Senha" required>
+            </div>
+            <p id="mensagem" class="mensagem" role="status" aria-live="polite"></p>
+            <button type="submit" class="botao" name="botao_entrar" id="botao-entrar">Entrar</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

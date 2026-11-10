@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico · Alfetti</title>
+    <link rel="stylesheet" href="../assets/base.css">
+    <link rel="stylesheet" href="../assets/componentes.css">
+    <link rel="stylesheet" href="../assets/paginas.css">
+    <script src="../api/historico.js" defer></script>
+    <script src="../api/auth.js" defer></script>
+</head>
+
+<!-- garçom e gerente podem ver o historico -->
+<body class="pagina-interna">
+
+    <header class="barra-topo">
+        <a class="barra-topo-nome" href="mesas.html">Alfetti</a>
+
+        <nav class="barra-topo-menu" aria-label="Menu principal">
+            <span id="usuario-logado"></span>
+            <a class="barra-topo-link" href="mesas.html">
+                <button type="button" id="botao-mesas" class="botao">Mesas</button>
+            </a>
+            <a class="barra-topo-link" href="historico.html" aria-current="page">
+                <button type="button" id="botao-historico" class="botao">Histórico</button>
+            </a>
+            <a class="barra-topo-link" href="produtos.html">
+                <button type="button" id="botao-produtos" class="botao">Produtos</button>
+            </a>
+            <a class="barra-topo-link" href="usuarios.html" data-perfil="gerente" hidden>
+                <button type="button" id="botao-usuarios" class="botao">Usuários</button>
+            </a>
+        </nav>
+
+        <div class="barra-topo-usuario">
+            <button type="button" id="botao-sair" class="botao">Sair</button>
+        </div>
+    </header>
+
+    <main class="conteudo">
+
+        <!-- painel-largo pq essa tabela tem mais coluna q as outras -->
+        <section class="painel painel-largo" aria-labelledby="titulo-formulario">
+            <div class="conteudo-topo">
+                <h1 id="titulo-formulario">Histórico</h1>
+            </div>
+
+            <p id="mensagem" class="mensagem" role="status" aria-live="polite"></p>
+
+            <!-- aq so entra comanda fechada, o historico.js cria as linhas -->
+            <table class="tabela">
+                <caption class="visualmente-oculto">Comandas fechadas</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Mesa</th>
+                        <th scope="col">Fechada por</th>
+                        <th scope="col">Abertura</th>
+                        <th scope="col">Fechamento</th>
+                        <th scope="col">Pagamento</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="lista-comandas"></tbody>
+            </table>
+
+            <p id="lista-vazia" class="texto-suave" hidden>Nenhuma comanda fechada ainda.</p>
+        </section>
+
+    </main>
+</body>
+
+</html>

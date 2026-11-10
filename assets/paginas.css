@@ -1,13 +1,6 @@
-/* ==========================================================
-   paginas.css
-   Ajustes que só uma ou duas telas precisam.
-   Por enquanto: o cartão centralizado do login e do cadastro.
-   ========================================================== */
+/* Ajustes especificos de paginas */
 
-/* ---------- Login e cadastro ----------
-   <body class="pagina-central">
-     <main class="cartao-central"> ... </main>
-*/
+/* lOGIN */
 
 .pagina-central {
   display: grid;
@@ -16,18 +9,75 @@
   align-items: center;
   padding: 0;
   padding-right: 5%;
+
+  /*Primeiro fundo SOMENTE NO LOGIN*/
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+    url('img/fundo-login.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: var(--fundo);
+}
+
+/* Cabeçalho com o nome do restaurante
+Essa kaceta ta fixo pra entrar no grid podepa */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  padding: var(--esp-5) var(--esp-6);
+  /* preto com 70% de opacidade, se quiser ver mais a foto é só diminuir o 0.7 */
+  background: rgba(0, 0, 0, 0.7);
+  border-bottom: 2px solid var(--destaque);
+}
+
+.header-nome {
+  font-family: var(--fonte-titulo);
+  font-size: 2rem;
+  color: var(--papel);
+}
+
+/* Mensagem de boas-vindas no espaço vazio do lado do login.
+   ta fixed pelo mesmo motivo do header, pra não entrar no grid */
+.boas-vindas {
+  position: fixed;
+  top: 50%;
+  left: 5%;
+  transform: translateY(-50%);
+  max-width: calc(100% - 400px - 15%);
+  color: var(--papel);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.boas-vindas-titulo {
+  font-size: 3.5rem;
+  margin-bottom: var(--esp-4);
+}
+
+.boas-vindas-texto {
+  font-size: 1.5rem;
+}
+
+/* em tela pequena não cabe do lado do login, então some */
+@media (max-width: 900px) {
+  .boas-vindas {
+    display: none;
+  }
 }
 
 .cartao-central {
   width: 100%;
   max-width: 400px;
-  height: 50%;
   background: var(--papel);
   border: 2px solid var(--destaque);
   border-radius: var(--raio-painel);
   padding-bottom: var(--esp-5);
   box-shadow: 0 0 20px var(--destaque);
-  margin-right: 5%;
 }
 
 .cartao-central h1 {
@@ -45,6 +95,364 @@
 }
 
 #botao-entrar {
-  width: 30%;
+  width: 90%;
   margin-left: 5%;
+  padding: var(--esp-4);
+  font-size: var(--esp-5);
+}
+
+/*
+Botão de sair de users
+*/
+
+#botao-sair {
+  margin-left: 10px;
+}
+
+#titulo-formulario{
+  font-size: 50px;
+  color: var(--destaque);
+}
+
+#titulo-mesas {
+  font-size: 50px;
+  color: var(--destaque);
+  background-color: var(--fundo);
+  padding: 10px;
+  border-radius: var(--raio-painel);
+}
+
+.conteudo-topo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+
+/* a mensagem de dentro do painel fica no meio igual o título */
+.painel .mensagem {
+  text-align: center;
+}
+
+/* mensagem do login com a mesma largura do botão Entrar e no meio */
+#form-login #mensagem {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+/* Background editado */
+.pagina-interna {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)),
+    url('img/Fundo-Sistema.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: var(--fundo);
+  min-height: 100vh;
+}
+
+/* TELA DE MESAS */
+
+/* duas colunas: a lateral com 280px e a grade pega o resto */
+.conteudo-mesas {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: var(--esp-5);
+  align-items: start;          /* senão a lateral estica até a altura da grade */
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--esp-5);
+
+  /* cinza da mesa ocupada */
+  --mesa-ocupada: #C9CDD0;
+  --mesa-ocupada-borda: #A3A9AE;
+}
+
+/* Lateral */
+
+.lateral-mesas {
+  position: sticky;            /* fica parada enquanto rola a grade */
+  top: var(--esp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+  padding: var(--esp-5);
+  background: var(--papel);
+  border: 3px solid var(--destaque);
+  border-radius: var(--raio-painel);
+}
+
+/* o #titulo-mesas já tem fundo e padding lá em cima, aqui dentro eu tiro */
+.lateral-mesas #titulo-mesas {
+  padding: 0;
+  background: none;
+  font-size: 2.5rem;
+}
+
+.lateral-subtitulo {
+  padding-top: var(--esp-4);
+  border-top: 1px solid var(--linha);
+  color: var(--texto);
+}
+
+/* Legenda */
+.legenda {
+  display: flex;
+  gap: var(--esp-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;            /* tira as bolinhas da lista */
+}
+
+.legenda-item {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  color: var(--texto-suave);
+}
+
+.legenda-cor {
+  display: inline-block;       /* o span sozinho não aceita largura e altura */
+  width: 14px;
+  height: 14px;
+  border-radius: var(--raio-talao);
+}
+
+.legenda-cor-livre {
+  background: var(--mesa-livre);
+}
+
+.legenda-cor-ocupada {
+  background: var(--mesa-ocupada);
+  border: 1px solid var(--mesa-ocupada-borda);
+}
+
+/* Resumo: nome na esquerda e valor na direita */
+.resumo-mesas {
+  margin: 0;
+}
+
+.resumo-linha {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--esp-2) 0;
+  border-bottom: 1px dashed #5B6670;
+}
+
+.resumo-linha dt {
+  color: var(--texto-suave);
+}
+
+.resumo-linha dd {
+  margin: 0;
+  font-family: var(--fonte-talao);
+  color: var(--texto);
+}
+
+/* Lista "Abertas agora" */
+.lista-abertas {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lista-abertas li {
+  padding: var(--esp-2) 0;
+  border-bottom: 1px solid var(--linha);
+  font-family: var(--fonte-talao);
+  font-size: 0.9375rem;
+}
+
+/* Grade de mesas (quem cria as mesas aqui dentro é o mesas.js) */
+
+.area-mesas .mensagem {
+  text-align: center;
+}
+
+.grade-mesas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);   /* 4 colunas do mesmo tamanho */
+  gap: var(--esp-4);
+}
+
+/* Cartão da mesa. A livre é <button> e a ocupada é <a>, mas a base do visual é a mesma */
+.mesa {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+  width: 100%;
+  min-height: 160px;
+  padding: var(--esp-5);
+  border: 2px solid transparent;
+  border-radius: var(--raio-painel);
+  text-align: left;            /* o button centraliza sozinho */
+  text-decoration: none;       /* o a já vem sublinhado */
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.mesa-numero {
+  font-family: var(--fonte-titulo);
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.mesa-status,
+.mesa-total {
+  font-family: var(--fonte-talao);
+  font-size: 0.9375rem;
+}
+
+.mesa-total {
+  margin-top: auto;            /* joga o total lá pra baixo do cartão */
+}
+
+/* livre: verde */
+.mesa-livre {
+  background: var(--mesa-livre);
+  border-color: var(--mesa-livre);
+  color: var(--sobre-destaque);
+}
+
+.mesa-livre:hover {
+  background: var(--mesa-livre-hover);
+  border-color: var(--mesa-livre-hover);
+}
+
+/* ocupada: cinza */
+.mesa-ocupada {
+  background: var(--mesa-ocupada);
+  border-color: var(--mesa-ocupada-borda);
+  color: var(--texto);
+}
+
+.mesa-ocupada:hover {
+  border-color: var(--texto);
+}
+
+/* Telas menores */
+
+@media (max-width: 1000px) {
+  .conteudo-mesas {
+    grid-template-columns: 1fr;            /* a lateral vai pra cima e a grade pra baixo */
+  }
+
+  .lateral-mesas {
+    position: static;
+  }
+
+  .grade-mesas {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* TELA DA COMANDA */
+
+/* duas colunas: a comanda na esquerda (pega o resto) e as ações na direita com 380px */
+.conteudo-comanda {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: var(--esp-5);
+  align-items: start;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--esp-5);
+}
+
+/* A comanda em si, a ideia é parecer um talão de papel */
+.talao-comanda {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+  padding: var(--esp-5);
+  background: var(--papel);
+  border: 3px solid var(--destaque);
+  border-radius: var(--raio-painel);
+}
+
+#titulo-comanda {
+  font-size: 2.5rem;
+  color: var(--destaque);
+}
+
+/* tabela dos itens, mais simples que a .tabela das outras telas */
+.talao-itens {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--fonte-talao);
+}
+
+.talao-itens th,
+.talao-itens td {
+  padding: var(--esp-2);
+  text-align: left;
+  border-bottom: 1px dashed #5B6670;
+}
+
+.talao-itens th {
+  font-weight: 400;
+  color: var(--texto-suave);
+}
+
+/* o subtotal (última coluna) fica encostado na direita igual num talão */
+.talao-itens th:last-child,
+.talao-itens td:last-child {
+  text-align: right;
+}
+
+.talao-total {
+  display: flex;
+  justify-content: space-between;
+  padding-top: var(--esp-3);
+  border-top: 2px solid var(--destaque);
+  font-family: var(--fonte-talao);
+  font-size: 1.5rem;
+}
+
+/* Lado direito: lançar, tirar, fechar e excluir */
+.acoes-comanda {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+  padding: var(--esp-5);
+  background: var(--papel);
+  border: 3px solid var(--destaque);
+  border-radius: var(--raio-painel);
+}
+
+/* cada formulário é um bloquinho separado por uma linha */
+.acoes-comanda form {
+  margin-bottom: var(--esp-4);
+  padding-bottom: var(--esp-4);
+  border-bottom: 1px solid var(--linha);
+}
+
+.acoes-comanda h2 {
+  margin-bottom: var(--esp-3);
+  color: var(--destaque);
+}
+
+/* os botões daqui ocupam a largura toda */
+.acoes-comanda .botao {
+  width: 100%;
+}
+
+/* aqui o campo usa a largura inteira, sem os 5% de margem do .campo */
+.acoes-comanda .campo label,
+.acoes-comanda .campo input,
+.acoes-comanda .campo select {
+  width: 100%;
+  margin-left: 0;
+}
+
+/* Telas menores */
+
+@media (max-width: 1000px) {
+  .conteudo-comanda {
+    grid-template-columns: 1fr;            /* a comanda vai pra cima e as ações pra baixo */
+  }
 }
