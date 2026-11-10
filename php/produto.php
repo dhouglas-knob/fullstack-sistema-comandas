@@ -16,7 +16,7 @@ if (!isset($_SESSION['usuario_id'])) {
 
 $metodo = $_SERVER['REQUEST_METHOD'];
 
-/* ver os produtos (GET) qualquer um logado pode
+/* ver os produtos qualquer um logado pode
    agora cadastrar, editar e excluir é so o gerente */
 if ($metodo !== "GET" && $_SESSION['usuario_funcao'] !== 'gerente') {
     http_response_code(403);

@@ -1,4 +1,9 @@
-/* tela da comanda: na esquerda fica a comanda e na direita oq da pra fazer com ela */
+/*
+
+Olha esta merda aqui dhouglas essa merda de código ou vai ser tranquilo ou vai ser uma merda cheia de linha
+vamos criar uma quantidade massiva de funções pra cada ação da comanda, pq a tela é dividida em 2: na esquerda fica a comanda e na direita oq da pra fazer com ela
+
+ */
 
 /* pega o id q veio na url, tipo comanda-detalhe.html?id=5 */
 const recebido = window.location.search;
@@ -21,7 +26,7 @@ function formatarValor(valor) {
     return Number(valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
 
-/* o banco manda a data toda feia "2026-11-09 19:30:00", aq ela vira "09/11/2026, 19:30" */
+/* o banco manda a data do jeito usa boiola "2026-11-09 19:30:00", aq ela vira "09/11/2026, 19:30" */
 function formatarData(texto) {
     const data = new Date(texto.replace(" ", "T"));
     return data.toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" });
@@ -136,7 +141,7 @@ carregarComanda();
 carregarItens();
 carregarProdutos();
 
-/* LANÇAR ITEM */
+/* Enfia o item gostoso */
 formItem.addEventListener("submit", evento => {
     evento.preventDefault();
     const dados = {
