@@ -1,6 +1,7 @@
 const form = document.querySelector("#form-login");
 
 form.addEventListener("submit", evento => {
+    /* segura o envio normal do form, quem manda é o fetch */
     evento.preventDefault();
     const dados = {
         email: form.email.value.trim(),
@@ -18,6 +19,7 @@ form.addEventListener("submit", evento => {
         .then(resposta => resposta.json().then(resultado => ({ resposta, resultado })))
         .then(({ resposta, resultado }) => {
             if (resposta.ok) {
+                /* o login.php ja criou a sessao, é so entrar */
                 window.location.href = "pages/mesas.html";
             } else {
                 mensagem.textContent = resultado.erro || "Não foi possível entrar.";

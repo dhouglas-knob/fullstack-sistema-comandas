@@ -20,42 +20,40 @@ $metodo = $_SERVER['REQUEST_METHOD'];
 
 if ($metodo == "GET")
 {
-    $id = $_GET['id'] ?? null;
+    $comandaId = $_GET['comanda_id'] ?? null;
 
-    if ($id) {
-        $sql = "SELECT * FROM produto_comanda WHERE id = ?";
+    /* o JOIN ja traz nome e valor do produto junto com cada item */
+    $sqlBase = "SELECT pc.id, pc.comanda_id, pc.produto_id, pc.quantidade_produto, p.nome, p.valor
+                FROM produto_comanda pc
+                JOIN produto p ON p.id = pc.produto_id";
+
+    /* produto_comanda.php?comanda_id=5 traz so os itens daquela comanda */
+    if ($comandaId) {
+        $sql = $sqlBase . " WHERE pc.comanda_id = ? ORDER BY pc.id";
 
         $stmt = $conn->prepare($sql);
 
-        $stmt->bind_param("i", $id);
+        $stmt->bind_param("i", $comandaId);
 
         $stmt->execute();
 
         $resultado = $stmt->get_result();
-
-        $produto_comanda = [];
-
-        while ($linha = $resultado->fetch_assoc()) {
-            $produto_comanda[] = $linha;
-        }
-
-        echo json_encode($produto_comanda);
     }
 
     else {
-        $sql = "SELECT * FROM produto_comanda";
+        $sql = $sqlBase . " ORDER BY pc.id";
 
         $resultado = $conn->query($sql);
-
-        $produtos_comanda = [];
-
-        while ($linha = $resultado->fetch_assoc())
-        {
-            $produtos_comanda[] = $linha;
-        }
-
-        echo json_encode($produtos_comanda);
     }
+
+    $produtos_comanda = [];
+
+    while ($linha = $resultado->fetch_assoc())
+    {
+        $produtos_comanda[] = $linha;
+    }
+
+    echo json_encode($produtos_comanda);
 }
 
 elseif ($metodo == "POST")
@@ -71,7 +69,7 @@ elseif ($metodo == "POST")
 
         exit;
     }
-    
+
     $comandaId = $dados['comanda_id'];
     $produtoId = $dados['produto_id'];
     $quantidade = $dados['quantidade_produto'] ?? 1;
@@ -87,6 +85,8 @@ elseif ($metodo == "POST")
 
     $stmt->execute();
 
+    atualizarTotalComanda($conn, $comandaId);
+
     http_response_code(201);
 
     echo json_encode([
@@ -98,11 +98,11 @@ elseif ($metodo == "PUT")
 {
     $dados = json_decode(file_get_contents("php://input"), true);
 
-    if (!isset($dados['id'])) {
+    if (!isset($dados['id'], $dados['comanda_id'], $dados['produto_id'], $dados['quantidade_produto'])) {
         http_response_code(400);
 
         echo json_encode([
-            "erro" => "Campo obrigatório ausente."
+            "erro" => "Campos obrigatórios ausentes."
         ]);
 
         exit;
@@ -125,15 +125,28 @@ elseif ($metodo == "PUT")
 
     $stmt->execute();
 
+    atualizarTotalComanda($conn, $comandaId);
+
     http_response_code(200);
 
-    echo json_encode([  
+    echo json_encode([
         "mensagem" => "Produtos atualizada na comanda com sucesso!"
     ]);
 }
 
 elseif ($metodo == "DELETE")
 {
+    /* tirar item da comanda so o gerente, garçom nem tenta */
+    if ($_SESSION['usuario_funcao'] !== 'gerente') {
+        http_response_code(403);
+
+        echo json_encode([
+            "erro" => "Só o gerente pode tirar um item da comanda."
+        ]);
+
+        exit;
+    }
+
     $dados = json_decode(file_get_contents("php://input"), true);
 
     if (!isset($dados['id'])) {
@@ -148,6 +161,40 @@ elseif ($metodo == "DELETE")
 
     $id = $dados['id'];
 
+    /* descobre de qual comanda é o item e se ela ainda ta aberta */
+    $sqlConsultaItem = "SELECT pc.comanda_id, c.status
+                        FROM produto_comanda pc
+                        JOIN comanda c ON c.id = pc.comanda_id
+                        WHERE pc.id = ?";
+
+    $stmtConsultaItem = $conn->prepare($sqlConsultaItem);
+
+    $stmtConsultaItem->bind_param("i", $id);
+
+    $stmtConsultaItem->execute();
+
+    $item = $stmtConsultaItem->get_result()->fetch_assoc();
+
+    if (!$item) {
+        http_response_code(404);
+
+        echo json_encode([
+            "erro" => "Item não encontrado."
+        ]);
+
+        exit;
+    }
+
+    if ($item['status'] != "aberta") {
+        http_response_code(400);
+
+        echo json_encode([
+            "erro" => "Não é possível tirar um item de uma comanda que não está aberta."
+        ]);
+
+        exit;
+    }
+
     $sql = "DELETE FROM produto_comanda
             WHERE id = ?";
 
@@ -157,6 +204,8 @@ elseif ($metodo == "DELETE")
 
     $stmt->execute();
 
+    atualizarTotalComanda($conn, $item['comanda_id']);
+
     http_response_code(200);
 
     echo json_encode([
@@ -164,7 +213,7 @@ elseif ($metodo == "DELETE")
     ]);
 }
 
-else 
+else
 {
     http_response_code(405);
 
@@ -175,7 +224,7 @@ else
 
 function verificarProdutoComanda(mysqli $conn, int $comandaId, int $produtoId, int $quantidade)
 {
-    //impede que seja registado um valor negativo ou 0
+    /* barra quantidade negativa ou 0, ninguem pede -2 cerveja */
     if ($quantidade < 1) {
         http_response_code(400);
 
@@ -186,7 +235,7 @@ function verificarProdutoComanda(mysqli $conn, int $comandaId, int $produtoId, i
         exit;
     }
 
-    //verifica se a comanda esta disponivel
+    /* ve se a comanda ta de pé */
     $sqlConsultaComanda = "SELECT status FROM comanda WHERE id = ?";
 
     $stmtConsultaComanda = $conn->prepare($sqlConsultaComanda);
@@ -195,13 +244,12 @@ function verificarProdutoComanda(mysqli $conn, int $comandaId, int $produtoId, i
 
     $stmtConsultaComanda->execute();
 
-    $pegarValorComanda = $stmtConsultaComanda->get_result(); 
+    $pegarValorComanda = $stmtConsultaComanda->get_result();
 
     $linha = $pegarValorComanda->fetch_assoc();
 
-    $valorComanda = $linha['status']; 
-
-    if ($valorComanda != "aberta") {
+    /* se n veio linha a comanda nem existe */
+    if (!$linha || $linha['status'] != "aberta") {
         http_response_code(400);
 
         echo json_encode([
@@ -211,7 +259,7 @@ function verificarProdutoComanda(mysqli $conn, int $comandaId, int $produtoId, i
         exit;
     }
 
-    //verifica se o produto esta disponivel
+    /* ve se o produto ta disponivel */
     $sqlConsultaProduto = "SELECT ativo FROM produto WHERE id = ?";
 
     $stmtConsultaProduto = $conn->prepare($sqlConsultaProduto);
@@ -220,13 +268,11 @@ function verificarProdutoComanda(mysqli $conn, int $comandaId, int $produtoId, i
 
     $stmtConsultaProduto->execute();
 
-    $pegarValorProduto = $stmtConsultaProduto->get_result(); 
+    $pegarValorProduto = $stmtConsultaProduto->get_result();
 
     $linha = $pegarValorProduto->fetch_assoc();
 
-    $ativo = $linha['ativo']; 
-
-    if ($ativo == false) {
+    if (!$linha || $linha['ativo'] == false) {
         http_response_code(400);
 
         echo json_encode([
@@ -235,6 +281,23 @@ function verificarProdutoComanda(mysqli $conn, int $comandaId, int $produtoId, i
 
         exit;
     }
+}
+
+/* toda vez q mexe nos itens soma tudo d novo e salva o total na comanda */
+function atualizarTotalComanda(mysqli $conn, int $comandaId)
+{
+    $sql = "UPDATE comanda
+            SET valor_total = (SELECT COALESCE(SUM(p.valor * pc.quantidade_produto), 0)
+                               FROM produto_comanda pc
+                               JOIN produto p ON p.id = pc.produto_id
+                               WHERE pc.comanda_id = ?)
+            WHERE id = ?";
+
+    $stmt = $conn->prepare($sql);
+
+    $stmt->bind_param("ii", $comandaId, $comandaId);
+
+    $stmt->execute();
 }
 
 ?>

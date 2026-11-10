@@ -40,20 +40,17 @@
 
     <main class="conteudo">
 
-        <!-- ========== Formulário: cadastrar (sem ?id=) e editar (com ?id=) ========== -->
+        <!-- cadastro de funcionario, todo mundo q entra por aq começa como garçom -->
         <section class="painel" aria-labelledby="titulo-formulario">
             <div class="conteudo-topo">
                 <h1 id="titulo-formulario">Novo funcionário</h1>
             </div>
 
-            <!-- O JS escreve aqui o resultado do cadastro (sucesso ou erro) -->
+            <!-- o js joga aq se deu bom ou se deu ruim -->
             <p id="mensagem" class="mensagem" role="status" aria-live="polite"></p>
 
-            <!-- Sem action e sem method: o JS captura o submit e envia com fetch -->
+            <!-- dhouglin, o form n tem action nem method de proposito, quem manda é o cadastro.js no fetch -->
             <form id="form-usuario">
-                <!-- Vazio no cadastro; com o id do usuário na edição -->
-                <input type="hidden" id="usuario-id" name="id">
-
                 <div class="campo">
                     <label for="nome">Nome</label>
                     <input type="text" id="nome" name="nome" required minlength="3" maxlength="100" autocomplete="name">

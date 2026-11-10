@@ -2,6 +2,7 @@ const form = document.querySelector("#form-usuario");
 
 form.addEventListener("submit", evento => {
     evento.preventDefault();
+    /* todo funcionario novo entra ativo e como garçom, quem promove dps é o gerente no Editar */
     const dados = {
         ativo: true,
         funcao: "garcom",
@@ -13,6 +14,7 @@ form.addEventListener("submit", evento => {
     const mensagem = document.getElementById("mensagem");
     mensagem.classList.remove("mensagem-sucesso", "mensagem-erro");
 
+    /* leio o json junto com a resposta pra conseguir mostrar o erro q o php mandou */
     fetch("../php/user.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

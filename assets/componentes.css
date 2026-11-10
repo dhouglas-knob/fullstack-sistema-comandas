@@ -2,9 +2,9 @@
 
 
 /* Botão 
-   Variações (somam à classe .botao):
-     botao-contorno  fundo claro com borda e texto em destaque; inverte no hover
-     botao-v         botão vermelho
+   dá pra somar com a classe .botao:
+     botao-contorno  fundo claro com borda, inverte quando passa o mouse
+     botao-v         botão vermelho (excluir)
 */
 
 .botao {
@@ -94,7 +94,7 @@
   margin-left: 5%;
 }
 
-/* O textarea não herda a fonte da página sozinho; e só cresce para baixo */
+/* o textarea não pega a fonte da página sozinho, e só deixo ele crescer pra baixo */
 .campo textarea {
   font: inherit;
   resize: vertical;
@@ -107,9 +107,8 @@
 
 
 /* Mensagem
-    O JavaScript escreve o texto e soma uma das variações:
-    mensagem-erro ou mensagem-sucesso
-    A altura mínima evita que a tela "pule" quando o texto aparece.
+    o JS escreve o texto e coloca mensagem-erro ou mensagem-sucesso
+    a altura mínima é pra tela não pular quando o texto aparece
 */
 
 .mensagem {
@@ -140,6 +139,11 @@
   padding: var(--esp-5);
   max-width: 55%;
   margin: 50px auto;
+}
+
+/* o histórico tem mais coluna na tabela, então o painel dele é mais largo */
+.painel-largo {
+  max-width: 85%;
 }
 
 /* Barra Superior */
@@ -203,8 +207,9 @@
   display: flex;
   gap: var(--esp-2);
 }
-/* Elementos só do gerente (ex.: Novo/Editar/Excluir produto).
-   Ficam escondidos até o auth.js confirmar que o usuário é gerente. */
+
+/* Dhouglas, tudo que tem a classe so-gerente fica escondido
+   até o auth.js colocar data-funcao="gerente" no body */
 body:not([data-funcao="gerente"]) .so-gerente {
     display: none;
 }

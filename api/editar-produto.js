@@ -1,3 +1,4 @@
+/* msm esquema do editar.js dos usuarios, so q com produto */
 const recebido = window.location.search;
 const parametro = new URLSearchParams(recebido);
 const id = parametro.get('id');

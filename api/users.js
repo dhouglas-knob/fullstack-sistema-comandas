@@ -1,5 +1,4 @@
-console.log("users.js carregado");
-
+/* puxa todos os usuarios e cria uma linha na tabela pra cada um */
 fetch("../php/user.php")
     .then(resposta => resposta.json())
     .then(dados => {
@@ -22,6 +21,8 @@ fetch("../php/user.php")
 
 const tbody = document.querySelector("#lista-usuarios");
 
+/* os botoes de excluir nascem dps pelo js, entao escuto o clique na tabela inteira
+   e vejo pelo data-acao se foi num botao de excluir */
 tbody.addEventListener("click", evento => {
     if (evento.target.dataset.acao !== "excluir") {
         return;
@@ -29,6 +30,7 @@ tbody.addEventListener("click", evento => {
     const mensagem = document.querySelector("#mensagem");
     const user_id = evento.target.dataset.id;
     const user_name = evento.target.dataset.nome;
+    /* o id de quem ta logado o auth.js deixou no body */
     if (user_id === document.body.dataset.usuarioId) {
         mensagem.classList.remove("mensagem-sucesso", "mensagem-erro");
         mensagem.textContent = "Você não pode se Excluir.";

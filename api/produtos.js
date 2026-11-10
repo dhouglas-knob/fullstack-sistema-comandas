@@ -1,11 +1,12 @@
 const tbody = document.querySelector("#lista-produtos");
 const mensagem = document.querySelector("#mensagem");
 
-// Formata o valor como dinheiro: 12.5 -> R$ 12,50
+/* deixa o valor com cara de dinheiro, 12.5 vira R$ 12,50 */
 function formatarValor(valor) {
     return Number(valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
 
+/* garçom tbm ve essa lista, mas a coluna de ações é so-gerente e fica escondida pra ele */
 fetch("../php/produto.php")
     .then(resposta => resposta.json())
     .then(dados => {
@@ -72,7 +73,7 @@ tbody.addEventListener("click", evento => {
         }
     })
     .catch(() => {
-        mensagem.textContent = "Não foi possível excluir. Se o produto já foi lançado em alguma comanda, deixe-o indisponível em Editar.";
+        mensagem.textContent = "Não foi possível excluir. Tente novamente.";
         mensagem.classList.add("mensagem-erro");
     });
 });

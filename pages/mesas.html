@@ -12,7 +12,7 @@
     <script src="../api/mesas.js" defer></script>
 </head>
 
-<!-- Sem data-acesso: garçom e gerente podem entrar aqui -->
+<!-- aq n tem data-acesso pq garçom e gerente entram nessa tela -->
 <body class="pagina-interna">
 
     <header class="barra-topo">
@@ -39,14 +39,14 @@
         </div>
     </header>
 
-        <main class="conteudo conteudo-mesas">
+    <main class="conteudo conteudo-mesas">
 
-        <!-- ========== Lateral: título, legenda, resumo e abertas agora ========== -->
+        <!-- lado esquerdo: legenda, resumo e as comandas abertas -->
         <aside class="lateral-mesas">
 
             <h1 id="titulo-mesas">Mesas</h1>
 
-            <!-- Legenda das cores (o texto garante que nada depende só de cor) -->
+            <!-- legenda das cores das mesas -->
             <ul class="legenda">
                 <li class="legenda-item">
                     <span class="legenda-cor legenda-cor-livre" aria-hidden="true"></span>
@@ -58,7 +58,7 @@
                 </li>
             </ul>
 
-            <!-- Resumo: o mesas.js preenche os números -->
+            <!-- esses numeros começam zerado, quem preenche é o mesas.js -->
             <dl class="resumo-mesas">
                 <div class="resumo-linha">
                     <dt>Livres</dt>
@@ -74,41 +74,21 @@
                 </div>
             </dl>
 
-            <!-- Comandas abertas: o mesas.js cria um <li> por comanda -->
+            <!-- o mesas.js joga um <li> aq pra cada comanda aberta -->
             <h2 class="lateral-subtitulo">Abertas agora</h2>
             <ul id="lista-abertas" class="lista-abertas"></ul>
             <p id="nenhuma-aberta" class="texto-suave">Nenhuma comanda aberta.</p>
 
         </aside>
 
-        <!-- ========== Área principal: mensagens e grade ========== -->
+        <!-- lado direito: a grade com as 12 mesas -->
         <section class="area-mesas">
 
-            <!-- Mensagens (fora de qualquer flex) -->
             <p id="mensagem" class="mensagem" role="status" aria-live="polite"></p>
 
-            <!-- Grade das 12 mesas: o mesas.js vai criar as mesas aqui dentro -->
-            <div id="grade-mesas" class="grade-mesas">
-
-                <!-- ===== TESTE: apagar quando o mesas.js estiver gerando a grade ===== -->
-                <button type="button" class="mesa mesa-livre" data-mesa="1">
-                    <span class="mesa-numero">01</span>
-                    <span class="mesa-status">livre</span>
-                </button>
-
-                <a class="mesa mesa-ocupada" href="comanda-detalhe.html?id=5">
-                    <span class="mesa-numero">02</span>
-                    <span class="mesa-status">1 comanda</span>
-                    <span class="mesa-total">R$ 18,50</span>
-                </a>
-
-                <button type="button" class="mesa mesa-livre" data-mesa="3">
-                    <span class="mesa-numero">03</span>
-                    <span class="mesa-status">livre</span>
-                </button>
-                <!-- ===== FIM DO TESTE ===== -->
-
-            </div>
+            <!-- dhouglin, a grade fica vazia no html msm, n é bug
+                 quem desenha as 12 mesas é o mesas.js, olhando as comandas abertas -->
+            <div id="grade-mesas" class="grade-mesas"></div>
         </section>
 
     </main>

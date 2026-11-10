@@ -4,10 +4,10 @@ session_start();
 header("Content-Type: application/json");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Limpar todas as variáveis de sessão
+    /* limpa tudo q tava guardado na sessao */
     $_SESSION = array();
 
-    // Destruir a sessão
+    /* e mata ela de vez */
     session_destroy();
 
     http_response_code(200);

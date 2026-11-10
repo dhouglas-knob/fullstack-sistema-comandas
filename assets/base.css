@@ -50,8 +50,9 @@
   --mesa-livre-hover: #276749;
   --mesa-ocupada: #C2C2C2;
   --mesa-ocupada-borda: #8F8F8F;
+  --linha: #D9D9D5;
 
-  /* Fontes (as reservas entram se o arquivo não carregar) */
+  /* Fontes (as de depois da vírgula são reserva, caso o arquivo não carregue) */
   --fonte-titulo: 'Lora', Georgia, serif;
   --fonte-talao: 'Space Mono', ui-monospace, Menlo, Consolas, monospace;
   --fonte-texto: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -59,6 +60,7 @@
   /* Cantos */
   --raio-botao: 3px;
   --raio-painel: 4px;
+  --raio-talao: 2px;
 
   /* Espaçamentos */
   --esp-1: 4px;
@@ -68,12 +70,12 @@
   --esp-5: 24px;
   --esp-6: 32px;
 
-  /* Altura mínima de botões e campos (toque confortável) */
+  /* altura mínima dos botões e dos campos pra ficar bom de clicar */
   --altura-controle: 44px;
 }
 
 
-/* Reset básico */
+/* aqui tira as margens e os padrões estranhos do navegador */
 
 *,
 *::before,
@@ -100,7 +102,7 @@ svg {
   max-width: 100%;
 }
 
-/* Formulários herdam a fonte da página (por padrão o navegador usa outra) */
+/* botão e input não pegam a fonte da página sozinhos, tem que mandar herdar */
 button,
 input,
 select,
@@ -113,13 +115,13 @@ button {
   cursor: pointer;
 }
 
-/* Quem tem o atributo hidden fica realmente escondido */
+/* garante que quem tem hidden some mesmo, o JS usa bastante isso */
 [hidden] {
   display: none !important;
 }
 
 
-/*  4. Página  */
+/* Página */
 
 body {
   min-height: 100vh;
@@ -132,7 +134,7 @@ body {
 }
 
 
-/*  5. Títulos e texto  */
+/* Títulos e texto */
 
 h1,
 h2,
@@ -158,13 +160,13 @@ a:hover {
   color: var(--texto-suave);
 }
 
-/* Valores e horários no estilo do talão */
+/* valores e horários com a fonte de talão (a Space Mono) */
 .talao {
   font-family: var(--fonte-talao);
 }
 
 
-/*  6. Foco visível  */
+/* contorno de quando navega pelo teclado */
 
 :focus-visible {
   outline: 2px solid var(--destaque);
@@ -172,9 +174,7 @@ a:hover {
 }
 
 
-/*  7. Utilitário  */
-
-/* Esconde da tela, mas mantém para leitores de tela */
+/* some da tela mas o leitor de tela ainda lê (uso no caption das tabelas) */
 .visualmente-oculto {
   position: absolute;
   width: 1px;

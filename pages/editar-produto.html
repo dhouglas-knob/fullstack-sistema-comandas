@@ -45,10 +45,10 @@
                 <h1 id="titulo-formulario">Editar produto</h1>
             </div>
 
-            <!-- O JS escreve aqui o resultado da edição (sucesso ou erro) -->
+            <!-- o js joga aq se deu bom ou se deu ruim -->
             <p id="mensagem" class="mensagem" role="status" aria-live="polite"></p>
 
-            <!-- Sem action e sem method: o JS captura o submit e envia com fetch -->
+            <!-- n tem action nem method pq quem manda é o editar-produto.js no fetch -->
             <form id="form-editar-produto">
                 <div class="campo">
                     <label for="nome">Nome</label>
@@ -82,7 +82,7 @@
 
                 <div class="campo">
                     <label for="ativo">Status</label>
-                    <!-- RN05: produto indisponível não aparece para lançar na comanda -->
+                    <!-- produto indisponivel n aparece pra lançar na comanda -->
                     <select id="ativo" name="ativo">
                         <option value="1" selected>Disponível</option>
                         <option value="0">Indisponível</option>

@@ -16,8 +16,8 @@ if (!isset($_SESSION['usuario_id'])) {
 
 $metodo = $_SERVER['REQUEST_METHOD'];
 
-// Qualquer usuário logado pode ver os produtos (GET);
-// só o gerente pode cadastrar, editar ou excluir.
+/* ver os produtos (GET) qualquer um logado pode
+   agora cadastrar, editar e excluir é so o gerente */
 if ($metodo !== "GET" && $_SESSION['usuario_funcao'] !== 'gerente') {
     http_response_code(403);
 
@@ -74,13 +74,9 @@ elseif ($metodo == "POST")
 {
     $dados = json_decode(file_get_contents("php://input"), true);
 
-    $ativo = $dados['ativo'];
-    $nome = $dados['nome'];
-    $categoria = $dados['categoria'];
-    $valor = $dados['valor'];
-    $obsPedido = $dados['descricao'];
-
-    if (!isset($dados['ativo'], $dados['nome'], $dados['categoria'], $dados['valor'], $dados['descricao'])) {
+    /* confere os campos antes de ler, senao o php vomita um aviso no meio do json */
+    if (!isset($dados['ativo'], $dados['nome'], $dados['categoria'], $dados['valor'])
+        || trim($dados['nome']) === '' || $dados['valor'] <= 0) {
         http_response_code(400);
 
         echo json_encode([
@@ -90,12 +86,18 @@ elseif ($metodo == "POST")
         exit;
     }
 
+    $ativo = $dados['ativo'] ? 1 : 0;
+    $nome = trim($dados['nome']);
+    $categoria = $dados['categoria'];
+    $valor = $dados['valor'];
+    $descricao = $dados['descricao'] ?? ''; /* a descricao é opcional */
+
     $sql = "INSERT INTO produto (ativo, nome, categoria, valor, descricao)
             VALUES (?, ?, ?, ?, ?)";
 
     $stmt = $conn->prepare($sql);
 
-    $stmt->bind_param("issds", $ativo, $nome, $categoria, $valor, $obsPedido);
+    $stmt->bind_param("issds", $ativo, $nome, $categoria, $valor, $descricao);
 
     $stmt->execute();
 
@@ -110,14 +112,8 @@ elseif ($metodo == "PUT")
 {
     $dados = json_decode(file_get_contents("php://input"), true);
 
-    $id = $dados['id'];
-    $ativo = $dados['ativo'];
-    $nome = $dados['nome'];
-    $categoria = $dados['categoria'];
-    $valor = $dados['valor'];
-    $obsPedido = $dados['descricao'];
-
-    if (!isset($dados['ativo'], $dados['nome'], $dados['categoria'], $dados['valor'], $dados['descricao'])) {
+    if (!isset($dados['id'], $dados['ativo'], $dados['nome'], $dados['categoria'], $dados['valor'])
+        || trim($dados['nome']) === '' || $dados['valor'] <= 0) {
         http_response_code(400);
 
         echo json_encode([
@@ -127,13 +123,20 @@ elseif ($metodo == "PUT")
         exit;
     }
 
+    $id = $dados['id'];
+    $ativo = $dados['ativo'] ? 1 : 0;
+    $nome = trim($dados['nome']);
+    $categoria = $dados['categoria'];
+    $valor = $dados['valor'];
+    $descricao = $dados['descricao'] ?? '';
+
     $sql = "UPDATE produto
             SET ativo = ?, nome = ?, categoria = ?, valor = ?, descricao = ?
             WHERE id = ?";
 
     $stmt = $conn->prepare($sql);
 
-    $stmt->bind_param("issdsi", $ativo, $nome, $categoria, $valor, $obsPedido, $id);
+    $stmt->bind_param("issdsi", $ativo, $nome, $categoria, $valor, $descricao, $id);
 
     $stmt->execute();
 
@@ -148,8 +151,6 @@ elseif ($metodo == "DELETE")
 {
     $dados = json_decode(file_get_contents("php://input"), true);
 
-    $id = $dados['id'];
-
     if (!isset($dados['id'])) {
         http_response_code(400);
 
@@ -160,6 +161,8 @@ elseif ($metodo == "DELETE")
         exit;
     }
 
+    $id = $dados['id'];
+
     $sql = "DELETE FROM produto
             WHERE id = ?";
 
@@ -167,7 +170,19 @@ elseif ($metodo == "DELETE")
 
     $stmt->bind_param("i", $id);
 
-    $stmt->execute();
+    try {
+        $stmt->execute();
+    } catch (mysqli_sql_exception $e) {
+        /* 1451 = a chave estrangeira n deixa apagar, o produto ja ta em alguma comanda */
+        if ($e->getCode() == 1451) {
+            http_response_code(409);
+            echo json_encode(["erro" => "Esse produto já foi lançado em comanda. Deixe ele indisponível em Editar."]);
+        } else {
+            http_response_code(500);
+            echo json_encode(["erro" => "Erro ao excluir produto."]);
+        }
+        exit;
+    }
 
     http_response_code(200);
 

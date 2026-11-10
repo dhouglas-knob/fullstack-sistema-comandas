@@ -47,6 +47,7 @@
 
         <p id="mensagem" class="mensagem" role="status" aria-live="polite"></p>
 
+        <!-- os campos começam vazio, o editar.js puxa o usuario do ?id= e preenche -->
         <form id="form-editar">
 
             <div class="campo">
@@ -77,7 +78,7 @@
 
             <div class="campo">
                 <label for="senha">Senha</label>
-
+                <!-- sem required aq: deixou em branco a senha fica a msm -->
                 <input type="password" id="senha" name="senha" minlength="6" autocomplete="new-password"
                        aria-describedby="ajuda-senha">
                 <span id="ajuda-senha" class="campo-ajuda">Mínimo de 6 caracteres. (Deixe em Branco para manter a senha atual)</span>

@@ -71,7 +71,7 @@ elseif ($metodo == "POST")
 {
     $dados = json_decode(file_get_contents("php://input"), true);
 
-    // Valida ANTES de ler os campos (senão o PHP solta warnings em HTML e quebra o JSON)
+    /* confere os campos antes de ler, senao o php vomita um aviso no meio do json */
     if (!isset($dados['ativo'], $dados['funcao'], $dados['nome'], $dados['email'], $dados['senha'])
         || trim($dados['nome']) === '' || trim($dados['email']) === '' || $dados['senha'] === '') {
         http_response_code(400);
@@ -99,7 +99,7 @@ elseif ($metodo == "POST")
     try {
         $stmt->execute();
     } catch (mysqli_sql_exception $e) {
-        // 1062 = chave duplicada (email já existe, coluna UNIQUE)
+        /* 1062 = email repetido, a coluna é UNIQUE entao n rola */
         if ($e->getCode() == 1062) {
             http_response_code(409);
             echo json_encode(["erro" => "Este e-mail já está cadastrado."]);
@@ -121,8 +121,7 @@ elseif ($metodo == "PUT")
 {
     $dados = json_decode(file_get_contents("php://input"), true);
 
-    // Valida ANTES de ler os campos (senão o PHP solta warnings em HTML e quebra o JSON)
-    // A senha não é obrigatória: se não vier, a senha atual é mantida
+    /* a senha n entra aq pq na edicao ela é opcional */
     if (!isset($dados['id'], $dados['ativo'], $dados['funcao'], $dados['nome'], $dados['email'])
         || trim($dados['nome']) === '' || trim($dados['email']) === '') {
         http_response_code(400);
@@ -140,7 +139,7 @@ elseif ($metodo == "PUT")
     $nome = trim($dados['nome']);
     $email = trim($dados['email']);
 
-    // Sem trim na senha: espaços contam como parte da senha
+    /* so troca a senha se veio alguma coisa, veio vazia fica a antiga msm */
     if (isset($dados['senha']) && $dados['senha'] !== '') {
         $senha = password_hash($dados['senha'], PASSWORD_DEFAULT);
 
@@ -199,6 +198,17 @@ elseif ($metodo == "DELETE")
 
     $id = $dados['id'];
 
+    /* o gerente n pode se apagar, o front ja barra mas aq é pra garantir */
+    if ($id == $_SESSION['usuario_id']) {
+        http_response_code(400);
+
+        echo json_encode([
+            "erro" => "Você não pode excluir a própria conta."
+        ]);
+
+        exit;
+    }
+
     $sql = "DELETE FROM user 
             WHERE id = ?";
 
@@ -206,7 +216,19 @@ elseif ($metodo == "DELETE")
 
     $stmt->bind_param("i", $id);
 
-    $stmt->execute();
+    try {
+        $stmt->execute();
+    } catch (mysqli_sql_exception $e) {
+        /* 1451 = a chave estrangeira n deixa apagar, o cara tem comanda no nome dele */
+        if ($e->getCode() == 1451) {
+            http_response_code(409);
+            echo json_encode(["erro" => "Esse usuário já tem comandas no sistema. Desative ele em Editar."]);
+        } else {
+            http_response_code(500);
+            echo json_encode(["erro" => "Erro ao excluir usuário."]);
+        }
+        exit;
+    }
 
     http_response_code(200);
 
