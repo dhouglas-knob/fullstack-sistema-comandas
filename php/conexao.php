@@ -4,7 +4,7 @@ date_default_timezone_set('America/Sao_Paulo');
 
 $host = "localhost";
 $user = "root";
-$password = "dhouglasKnob";
+$password = "";
 $database = "restaurantedb";
 
 header("Content-Type: application/json");
